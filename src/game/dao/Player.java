@@ -2,7 +2,9 @@ package game.dao;
 
 import java.io.Serializable;
 
-public class Player implements Comparable<Player>,Serializable{
+import org.json.JSONObject;
+
+public class Player implements Serializable{
 
 	private static final long serialVersionUID = 7166783686477006589L;
 	
@@ -20,24 +22,21 @@ public class Player implements Comparable<Player>,Serializable{
 	public String toString() {
 		return String.format("%s: %03d", nombre, puntuacion);
 	}
+
+	public JSONObject asJson() {
+		JSONObject jO = new JSONObject();
+		jO.put("Nombre", nombre);
+		jO.put("Puntos", puntuacion);
+		return jO;
+	}
+	
 	public String getNombre() {
 		return nombre;
-	}
-	public void setNombre(String nombre) {
-		this.nombre = nombre;
 	}
 	public int getPuntuacion() {
 		return puntuacion;
 	}
-	public void setPuntuacion(int puntuacion) {
-		this.puntuacion = puntuacion;
-	}
-	@Override
-	public int compareTo(Player o) {
-		if(o == null)
-			return 0;
-		return o.puntuacion - this.puntuacion;
-	}
+	
 	 
 	
 }

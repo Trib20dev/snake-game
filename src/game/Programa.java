@@ -135,7 +135,7 @@ public class Programa {
 					} catch (DeadSnakeException e1) {
 						vivo = false;
 					}
-					Thread.sleep(150);
+					Thread.sleep(50);
 				}
 			} catch (InterruptedException e) {
 				e.printStackTrace();
@@ -408,7 +408,7 @@ public class Programa {
 	 * @param puntuacion Puntuación que ha de guardar
 	 */
 	private static void guardarPuntuacionMaxima(String fichero, Dato puntuacion) {
-		try(DataOutputStream out = new DataOutputStream(new BufferedOutputStream(new FileOutputStream("src/serpientitaaaa/guardado/" + fichero)))  ){
+		try(DataOutputStream out = new DataOutputStream(new BufferedOutputStream(new FileOutputStream("src/game/guardado/" + fichero)))  ){
 			out.writeShort(puntuacion.valorInt);
 		} catch (IOException e ) {
 			e.printStackTrace();
@@ -422,7 +422,7 @@ public class Programa {
 	 * @return La puntuacion máxima almacenada, o 0 si es la primera vez que juega
 	 */
 	private static short obtenerPuntuacionMaxima(String fichero) {
-		try(DataInputStream in = new DataInputStream(new BufferedInputStream(new FileInputStream("src/serpientitaaaa/guardado/" + fichero)))  ){
+		try(DataInputStream in = new DataInputStream(new BufferedInputStream(new FileInputStream("src/game/guardado/" + fichero)))  ){
 			return in.readShort();
 		} catch (FileNotFoundException e ) {
 //			e.printStackTrace();
@@ -464,11 +464,11 @@ public class Programa {
 	 */
 	public static void reset() {
 		//Busca todos los hijos q atraviesen el filtro y los borra
-		for(File file: new File("src/serpientitaaaa/guardado").listFiles(e -> (e.getName().matches("[a-z]*\\.bin"))))
+		for(File file: new File("src/game/guardado").listFiles(e -> (e.getName().matches("[a-z]*\\.bin"))))
 			file.delete();
 		//Ahora hay solo que rehacer el json
 		
-		try(FileWriter f = new FileWriter("src/serpientitaaaa/guardado/ranking.json")){
+		try(FileWriter f = new FileWriter("src/game/guardado/ranking.json")){
 			JSONWriter jW = new JSONWriter(f);
 			jW.object();
 			jW.key("First").value(null)
