@@ -1,1 +1,0 @@
-typeSearchIndex = [{"l":"All Classes and Interfaces","u":"allclasses-index.html"},{"p":"game","l":"Coordenada"},{"p":"game.dao","l":"DAO"},{"p":"game","l":"Dato"},{"p":"game","l":"DeadSnakeException"},{"p":"game.dao","l":"Player"},{"p":"game","l":"Programa"},{"p":"game","l":"Ventana"}];updateSearchResults();
