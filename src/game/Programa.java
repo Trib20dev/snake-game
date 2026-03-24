@@ -29,7 +29,7 @@ import javax.swing.SwingConstants;
 
 import org.json.JSONWriter;
 
-import game.dao.Player;
+import game.models.PlayerModel;
 import game.models.RankingModel;
 import game.services.RankingService;
 
@@ -445,7 +445,7 @@ public class Programa {
 		//Creo q funciona? Ojala y lo haga, pq vaya quebradero de cabeza
 		RankingService servicio = new RankingService();
 		RankingModel modelo = new RankingModel(servicio.obtenerPlayers());
-		modelo.añadirPlayer(new Player(fichero.replaceAll("([a-z]*).bin", "$1"), puntos.valorInt));
+		modelo.añadirPlayer(new PlayerModel(fichero.replaceAll("([a-z]*).bin", "$1"), puntos.valorInt));
 		servicio.guardar(modelo.getPlayers());
 	}
 	/**

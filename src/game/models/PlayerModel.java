@@ -1,20 +1,15 @@
-package game.dao;
-
-import java.io.Serializable;
+package game.models;
 
 import org.json.JSONObject;
 
-public class Player implements Serializable{
-
-	private static final long serialVersionUID = 7166783686477006589L;
-	
+public class PlayerModel{
 	public String nombre;
 	public int puntuacion;
 	/**
 	 * @param nombre
 	 * @param puntuacion
 	 */
-	public Player(String nombre, int puntuacion) {
+	public PlayerModel(String nombre, int puntuacion) {
 		this.nombre = nombre;
 		this.puntuacion = puntuacion;
 	}
@@ -44,7 +39,7 @@ public class Player implements Serializable{
 	public boolean equals(Object obj) {
 		if(obj == null)
 			return false;
-		return ((Player)obj).nombre.equals(nombre);
+		return ((PlayerModel)obj).nombre.equals(nombre);
 	}
 	 
 	
