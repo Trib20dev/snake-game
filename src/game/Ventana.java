@@ -13,8 +13,8 @@ import java.awt.event.MouseEvent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 
-import game.dao.DAO;
 import game.dao.Player;
+import game.models.RankingModel;
 
 /**
  * Varias de las configuraciones y creaciones de ventanas
@@ -246,7 +246,7 @@ public class Ventana {
 	 */
 	private static JFrame crearRanking() {
 		JFrame vRank = new JFrame();
-		Player players[] = DAO.jsonAJava();
+		Player players[] = RankingModel.jsonAJava();
 		vRank.setLayout(null);
 		vRank.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 //		vRank.setVisible(false); Creo recordar q se genera en false automaticamente

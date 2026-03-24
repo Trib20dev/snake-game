@@ -1,9 +1,8 @@
-package game.dao;
+package game.models;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.IOException;
 import java.io.PrintStream;
 import java.util.Arrays;
 import java.util.Comparator;
@@ -11,23 +10,23 @@ import java.util.Comparator;
 import org.json.JSONObject;
 import org.json.JSONTokener;
 
-public class DAO {
+import game.dao.Player;
+
+public class RankingModel {
+	private static final String[] POSITIONS = { "First", "Second", "Third", "Fourth", "Fifth" };
 
 	public static Player[] jsonAJava() {
 		Player[] aP = new Player[6];
 		try {
 			JSONObject jO = new JSONObject(new JSONTokener(new FileInputStream("src/game/guardado/ranking.json")));
-			String[] puestos = { "First", "Second", "Third", "Fourth", "Fifth" };
-			for (int i = 0; i < puestos.length; i++)
-				if (jO.get(puestos[i]) != JSONObject.NULL) {
-					JSONObject jOb = (JSONObject) jO.get(puestos[i]);
+			for (int i = 0; i < POSITIONS.length; i++)
+				if (jO.get(POSITIONS[i]) != JSONObject.NULL) {
+					JSONObject jOb = (JSONObject) jO.get(POSITIONS[i]);
 					aP[i] = new Player(jOb.getString("Nombre"), jOb.getInt("Puntos"));
 				}
-
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
-
 		return aP;
 	}
 
@@ -43,23 +42,15 @@ public class DAO {
 	 *                  almacena los primeros 5)
 	 */
 	public static void javaAJson(Player[] campeones) {
-		Player[] campeonesReales = new Player[campeones.length];
-		for (int i = 0, c = 0; i < campeones.length; i++)
-			if (campeones[i] != null)
-				campeonesReales[c++] = campeones[i];
-		Arrays.sort(campeonesReales,
-				Comparator.nullsLast((a, b) -> Integer.compare(b.getPuntuacion(), a.getPuntuacion())));
-
+		//Ordena los players
+		Arrays.sort(campeones, Comparator.nullsLast((a, b) -> Integer.compare(b.getPuntuacion(), a.getPuntuacion())));
+		//ALmacena los 5 de mayor puntuacion
 		try (PrintStream pS = new PrintStream(new FileOutputStream("src/game/guardado/ranking.json"))) {
 			JSONObject jO = new JSONObject();
-			jO.put("First",  (campeonesReales[0] != null) ? campeonesReales[0].asJson() : JSONObject.NULL);
-			jO.put("Second", (campeonesReales[1] != null) ? campeonesReales[1].asJson() : JSONObject.NULL);
-			jO.put("Third",  (campeonesReales[2] != null) ? campeonesReales[2].asJson() : JSONObject.NULL);
-			jO.put("Fourth", (campeonesReales[3] != null) ? campeonesReales[3].asJson() : JSONObject.NULL);
-			jO.put("Fifth",  (campeonesReales[4] != null) ? campeonesReales[4].asJson() : JSONObject.NULL);
+			for (int i = 0; i < POSITIONS.length; i++)
+				jO.put(POSITIONS[i], (campeones[i] != null) ? campeones[i].asJson() : JSONObject.NULL);
 			pS.print(jO.toString(2));
-
-		} catch (IOException e) {
+		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
 	}

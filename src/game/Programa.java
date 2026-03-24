@@ -29,8 +29,8 @@ import javax.swing.SwingConstants;
 
 import org.json.JSONWriter;
 
-import game.dao.DAO;
 import game.dao.Player;
+import game.models.RankingModel;
 
 //Tengo que revisar el momento en el que chequeo si puede chocar, pq puede "colisionar"
 //con la cola que debería desaparecer en el mismo momento... Despues
@@ -441,7 +441,7 @@ public class Programa {
 	 * @param puntos Los puntos que obtuvo para ver si califica para el ranking
 	 */
 	public static void actualizarRanking(String fichero, Dato puntos) {
-		Player arr[] = DAO.jsonAJava();
+		Player arr[] = RankingModel.jsonAJava();
 		String nombre = fichero.replaceAll("([a-z]*)\\.bin", "$1");
 		//Voy a comprobar si existe ya el jugador actual, para volverlo ranking de verdad		
 		int i = -1;
@@ -456,7 +456,7 @@ public class Programa {
 			}
 		} else
 			arr[5] = new Player(nombre, puntos.valorInt);
-		DAO.javaAJson(arr);
+		RankingModel.javaAJson(arr);
 
 	}
 	/**
