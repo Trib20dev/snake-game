@@ -31,6 +31,7 @@ import org.json.JSONWriter;
 
 import game.dao.Player;
 import game.models.RankingModel;
+import game.services.RankingService;
 
 //Tengo que revisar el momento en el que chequeo si puede chocar, pq puede "colisionar"
 //con la cola que debería desaparecer en el mismo momento... Despues
@@ -438,26 +439,14 @@ public class Programa {
 	 * a posteriori
 	 * 
 	 * @param fichero Utilizado para guardar el nombre del actual jugador
-	 * @param puntos Los puntos que obtuvo para ver si califica para el ranking
+	 * @param puntos Los puntos que obtuvo en esta partida
 	 */
 	public static void actualizarRanking(String fichero, Dato puntos) {
-		Player arr[] = RankingModel.jsonAJava();
-		String nombre = fichero.replaceAll("([a-z]*)\\.bin", "$1");
-		//Voy a comprobar si existe ya el jugador actual, para volverlo ranking de verdad		
-		int i = -1;
-		for(int j=0; j<arr.length;j++)//Busca el nombre del actual jugador
-			if(arr[j]!=null)
-				if(arr[j].getNombre().equals(nombre))
-					i = j;
-		if(i != -1) {//Si detectase u nombre ya
-			if(arr[i].getPuntuacion() <= puntos.valorInt) {
-				arr[i] = null;
-				arr[5] = new Player(nombre, puntos.valorInt);								
-			}
-		} else
-			arr[5] = new Player(nombre, puntos.valorInt);
-		RankingModel.javaAJson(arr);
-
+		//Creo q funciona? Ojala y lo haga, pq vaya quebradero de cabeza
+		RankingService servicio = new RankingService();
+		RankingModel modelo = new RankingModel(servicio.obtenerPlayers());
+		modelo.añadirPlayer(new Player(fichero.replaceAll("([a-z]*).bin", "$1"), puntos.valorInt));
+		servicio.guardar(modelo.getPlayers());
 	}
 	/**
 	 * Elimina los archivos binarios de guardado y "limpia" el archivo json
@@ -466,8 +455,7 @@ public class Programa {
 		//Busca todos los hijos q atraviesen el filtro y los borra
 		for(File file: new File("src/game/guardado").listFiles(e -> (e.getName().matches("[a-z]*\\.bin"))))
 			file.delete();
-		//Ahora hay solo que rehacer el json
-		
+		//Ahora hay solo que rehacer el json		
 		try(FileWriter f = new FileWriter("src/game/guardado/ranking.json")){
 			JSONWriter jW = new JSONWriter(f);
 			jW.object();

@@ -1,36 +1,32 @@
 package game.models;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.PrintStream;
 import java.util.Arrays;
 import java.util.Comparator;
-
-import org.json.JSONObject;
-import org.json.JSONTokener;
 
 import game.dao.Player;
 
 public class RankingModel {
-	private static final String[] POSITIONS = { "First", "Second", "Third", "Fourth", "Fifth" };
+	private Player[] players;
 
-	public static Player[] jsonAJava() {
-		Player[] aP = new Player[6];
-		try {
-			JSONObject jO = new JSONObject(new JSONTokener(new FileInputStream("src/game/guardado/ranking.json")));
-			for (int i = 0; i < POSITIONS.length; i++)
-				if (jO.get(POSITIONS[i]) != JSONObject.NULL) {
-					JSONObject jOb = (JSONObject) jO.get(POSITIONS[i]);
-					aP[i] = new Player(jOb.getString("Nombre"), jOb.getInt("Puntos"));
-				}
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		}
-		return aP;
+	/**
+	 * Constructor del modelo, se contruye en base a el array que le pases<br>
+	 * "Igual deberia usar service directamente en el constructor pa montarlo?"
+	 * @param players Los players almacenados en el ranking, obtenidos con el servicio normalmente
+	 */
+	public RankingModel(Player[] players) {
+		this.players = players;
+	}
+	/**
+	 * TODO Ns si lo hay q documentar pero por si las moscas
+	 * @return
+	 */
+	public Player[] getPlayers() {
+		return players;
 	}
 
 	/**
+	 * TODO Rehacer la documentacion aca
+	 * 
 	 * Almacena las 5 mejores runs con mayor puntuacion que le pases
 	 * 
 	 * Cambio de planes, voy a hacer q implemente comparable y que use sort, q igual
@@ -41,18 +37,29 @@ public class RankingModel {
 	 * @param campeones Los jugadores que se almacenaran en el ranking (Solo
 	 *                  almacena los primeros 5)
 	 */
-	public static void javaAJson(Player[] campeones) {
-		//Ordena los players
-		Arrays.sort(campeones, Comparator.nullsLast((a, b) -> Integer.compare(b.getPuntuacion(), a.getPuntuacion())));
-		//ALmacena los 5 de mayor puntuacion
-		try (PrintStream pS = new PrintStream(new FileOutputStream("src/game/guardado/ranking.json"))) {
-			JSONObject jO = new JSONObject();
-			for (int i = 0; i < POSITIONS.length; i++)
-				jO.put(POSITIONS[i], (campeones[i] != null) ? campeones[i].asJson() : JSONObject.NULL);
-			pS.print(jO.toString(2));
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
+	public void añadirPlayer(Player player) {// Igual tengo q meter aca la logica para evitar el duplicado
+		// Almacena el nuevo player si hace falta
+		int i= contiene(player);
+		if (i == -1) // Si no esta
+			players[5] = player;
+		else if (player.puntuacion > players[i].puntuacion) // Si esta y coincide
+			players[i] = player;
+		// Ordena los players
+		Arrays.sort(players, Comparator.nullsLast((a, b) -> Integer.compare(b.getPuntuacion(), a.getPuntuacion())));
+		// Se asegura de que no queda ningun innecesario al final
+		players[5] = null;
+	}
+	/**
+	 * TODO Ya le pondre documentacion en algun momento
+	 * @param player
+	 * @return
+	 */
+	private int contiene(Player player) {
+		for (int i = 0; i < players.length; i++) {
+			if (player.equals(players[i]))//Entiendo q no puede dar problema por nulo
+				return i;
 		}
+		return -1;
 	}
 
 }

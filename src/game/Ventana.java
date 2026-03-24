@@ -15,6 +15,7 @@ import javax.swing.JLabel;
 
 import game.dao.Player;
 import game.models.RankingModel;
+import game.services.RankingService;
 
 /**
  * Varias de las configuraciones y creaciones de ventanas
@@ -246,7 +247,9 @@ public class Ventana {
 	 */
 	private static JFrame crearRanking() {
 		JFrame vRank = new JFrame();
-		Player players[] = RankingModel.jsonAJava();
+		RankingService ser = new RankingService();//Definitivamente tengo q revisar como trabajo esto
+		RankingModel modelo = new RankingModel(ser.obtenerPlayers());
+		Player players[] = modelo.getPlayers();
 		vRank.setLayout(null);
 		vRank.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 //		vRank.setVisible(false); Creo recordar q se genera en false automaticamente

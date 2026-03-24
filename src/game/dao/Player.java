@@ -37,6 +37,15 @@ public class Player implements Serializable{
 		return puntuacion;
 	}
 	
+	/**
+	 * Se considera que dos jugadores son equivalents cuando cuentan con el mismo nombre
+	 */
+	@Override
+	public boolean equals(Object obj) {
+		if(obj == null)
+			return false;
+		return ((Player)obj).nombre.equals(nombre);
+	}
 	 
 	
 }
