@@ -202,6 +202,18 @@ public class Ventana {
 		ventana.setPreferredSize(new Dimension(250 + insets.left + insets.right, 150 + insets.top + insets.bottom));
 		ventana.pack();
 		ventana.setResizable(false);
+		
+		//Vamos a añadirle que lo reinicie tambien cuando hagas click en espacio o enter
+		ventana.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				if(e.getKeyCode() == KeyEvent.VK_SPACE || e.getKeyCode() == KeyEvent.VK_ENTER)
+					volveraAJugar.valorBooleano=true;
+				super.keyPressed(e);
+			}
+		});
+		
+		
 
 		new Thread(() -> {
 			while (volveraAJugar.valorBooleano == null) {

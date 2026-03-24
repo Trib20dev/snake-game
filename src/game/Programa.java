@@ -135,7 +135,7 @@ public class Programa {
 					} catch (DeadSnakeException e1) {
 						vivo = false;
 					}
-					Thread.sleep(50);
+					Thread.sleep(150);
 				}
 			} catch (InterruptedException e) {
 				e.printStackTrace();
