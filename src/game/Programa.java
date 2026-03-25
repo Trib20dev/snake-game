@@ -288,19 +288,20 @@ public class Programa {
 				};
 				frame.addKeyListener(movimientos);
 			}
-			/**
-			 * Crea una manzana en una posicion aleatoria que
-			 * no coincida con la serpiente
-			 * 
-			 * @param pantalla Cuadrícula en la que ha de crear la manzana
-			 */
-			public static void crearManzanita(JLabel[][] pantalla) {
-				Coordenada tempCoor = new Coordenada(ran.nextInt(pantalla.length), ran.nextInt(pantalla[0].length));
-				while (pantalla[tempCoor.fila][tempCoor.columna].getBackground() != Color.white)// Si no es blanco busca otro
-																								// lugar
-					tempCoor = new Coordenada(ran.nextInt(pantalla.length), ran.nextInt(pantalla[0].length));
-				color(pantalla, tempCoor, Color.red);// Crea mi manzanita
-			}
+			
+//			/**
+//			 * Crea una manzana en una posicion aleatoria que
+//			 * no coincida con la serpiente
+//			 * 
+//			 * @param pantalla Cuadrícula en la que ha de crear la manzana
+//			 */
+//			public static void crearManzanita(JLabel[][] pantalla) {
+//				Coordenada tempCoor = new Coordenada(ran.nextInt(pantalla.length), ran.nextInt(pantalla[0].length));
+//				while (pantalla[tempCoor.fila][tempCoor.columna].getBackground() != Color.white)// Si no es blanco busca otro
+//																								// lugar
+//					tempCoor = new Coordenada(ran.nextInt(pantalla.length), ran.nextInt(pantalla[0].length));
+//				color(pantalla, tempCoor, Color.red);// Crea mi manzanita
+//			}
 			/**
 			 * Cambia el color del background de la coordenada especificada dentro de la cuadricula 
 			 * al color indicado
@@ -317,55 +318,55 @@ public class Programa {
 	
 
 
-	/**
-	 * Se encarga de desplazar la serpiente y actualizar la cuadrícula en base a la
-	 * dirección actual de la misma
-	 * 
-	 * @param serp     Lista enlazada con las coordenadas de la serpiente
-	 * @param pantalla Cuadrícula sobre la que se muestra la serpiente
-	 * @param dir      Dirección o sentido actual de la serpiente
-	 * @throws DeadSnakeException Cuando muere la serpiente en la cuadrícula a causa
-	 *                            del movimiento
-	 */
-	public static void actualizarCuadrícula(LinkedList<Coordenada> serp, JLabel[][] pantalla, int dir, JLabel puntuacion, Dato puntos,JLabel maxPoints, Dato maxPuntos) //Inicialmente lo había llamado mover, pero tambien me vale
-			throws DeadSnakeException {
-		int f = 0, c = 0;
-		Coordenada cabeza = serp.getLast();
-		// Falta ver si puede cambiar la direccion, pero eso, como sea
-		// ira pa el evento
-
-		switch (dir) {
-		case DERECHA -> c++;
-		case IZQUIERDA -> c--;
-		case ARRIBA -> f--;
-		case ABAJO -> f++;
-		}
-
-		Coordenada nuevaCabeza = new Coordenada(cabeza, f, c);
-
-		// Miro si se come una manzanita
-		if (pantalla[(Math.min(pantalla.length - 1, (Math.max(0,nuevaCabeza.fila))))][(Math.min(pantalla.length - 1, (Math.max(0,nuevaCabeza.columna))))].getBackground() != Color.red) { //Voy a usar un min y max para q no salga de los limites el valor
-			color(pantalla, serp.getFirst(), Color.white); // Antigua cola, en blanco
-			serp.removeFirst();// Ya es blanca, deja de existir
-		} else {
-			crearManzanita(pantalla);
-			aumentarPuntuacion(puntuacion, puntos);
-			if(puntos.valorInt > maxPuntos.valorInt)
-				aumentarMaxPuntuacion(maxPoints, maxPuntos);
-			
-		}
-		if (!cabezaValida(pantalla, nuevaCabeza))// Si la cabeza toma una posicición inválida lanza una excepción a capturar
-			throw new DeadSnakeException();
-
-		color(pantalla, serp.getLast(), Color.black);// Antigua cabeza, en negro
-		serp.add(nuevaCabeza);// Añadimos la nueva cabeza
-
-		color(pantalla, nuevaCabeza, Color.gray);// La ponemos en gris
-
-		// Actualizamos la direccion a la nueva direccion
-//		direccion == nuevaDireccion Tuve q mover esta tonteria pa fuera pq no es accesible
-
-	}
+//	/**
+//	 * Se encarga de desplazar la serpiente y actualizar la cuadrícula en base a la
+//	 * dirección actual de la misma
+//	 * 
+//	 * @param serp     Lista enlazada con las coordenadas de la serpiente
+//	 * @param pantalla Cuadrícula sobre la que se muestra la serpiente
+//	 * @param dir      Dirección o sentido actual de la serpiente
+//	 * @throws DeadSnakeException Cuando muere la serpiente en la cuadrícula a causa
+//	 *                            del movimiento
+//	 */
+//	public static void actualizarCuadrícula(LinkedList<Coordenada> serp, JLabel[][] pantalla, int dir, JLabel puntuacion, Dato puntos,JLabel maxPoints, Dato maxPuntos) //Inicialmente lo había llamado mover, pero tambien me vale
+//			throws DeadSnakeException {
+//		int f = 0, c = 0;
+//		Coordenada cabeza = serp.getLast();
+//		// Falta ver si puede cambiar la direccion, pero eso, como sea
+//		// ira pa el evento
+//
+//		switch (dir) {
+//		case DERECHA -> c++;
+//		case IZQUIERDA -> c--;
+//		case ARRIBA -> f--;
+//		case ABAJO -> f++;
+//		}
+//
+//		Coordenada nuevaCabeza = new Coordenada(cabeza, f, c);
+//
+//		// Miro si se come una manzanita
+//		if (pantalla[(Math.min(pantalla.length - 1, (Math.max(0,nuevaCabeza.fila))))][(Math.min(pantalla.length - 1, (Math.max(0,nuevaCabeza.columna))))].getBackground() != Color.red) { //Voy a usar un min y max para q no salga de los limites el valor
+//			color(pantalla, serp.getFirst(), Color.white); // Antigua cola, en blanco
+//			serp.removeFirst();// Ya es blanca, deja de existir
+//		} else {
+//			crearManzanita(pantalla);
+//			aumentarPuntuacion(puntuacion, puntos);
+//			if(puntos.valorInt > maxPuntos.valorInt)
+//				aumentarMaxPuntuacion(maxPoints, maxPuntos);
+//			
+//		}
+//		if (!cabezaValida(pantalla, nuevaCabeza))// Si la cabeza toma una posicición inválida lanza una excepción a capturar
+//			throw new DeadSnakeException();
+//
+//		color(pantalla, serp.getLast(), Color.black);// Antigua cabeza, en negro
+//		serp.add(nuevaCabeza);// Añadimos la nueva cabeza
+//
+//		color(pantalla, nuevaCabeza, Color.gray);// La ponemos en gris
+//
+//		// Actualizamos la direccion a la nueva direccion
+////		direccion == nuevaDireccion Tuve q mover esta tonteria pa fuera pq no es accesible
+//
+//	}
 
 	/**
 	 * Función empleada para comprobar la validez de una posicion espacial para la
