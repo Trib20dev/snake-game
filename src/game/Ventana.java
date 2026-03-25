@@ -13,8 +13,8 @@ import java.awt.event.MouseEvent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 
-import game.models.PlayerModel;
-import game.models.RankingModel;
+import game.models.Player;
+import game.models.Ranking;
 import game.services.RankingService;
 
 /**
@@ -248,8 +248,8 @@ public class Ventana {
 	private static JFrame crearRanking() {
 		JFrame vRank = new JFrame();
 		RankingService ser = new RankingService();//Definitivamente tengo q revisar como trabajo esto
-		RankingModel modelo = new RankingModel(ser.obtenerPlayers());
-		PlayerModel players[] = modelo.getPlayers();
+		Ranking modelo = new Ranking(ser.obtenerPlayers());
+		Player players[] = modelo.getPlayers();
 		vRank.setLayout(null);
 		vRank.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 //		vRank.setVisible(false); Creo recordar q se genera en false automaticamente

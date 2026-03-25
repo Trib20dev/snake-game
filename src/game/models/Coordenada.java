@@ -5,7 +5,7 @@ package game.models;
  * correspondiente
  */
 public class Coordenada {
-	int fila, columna;
+	public int fila, columna;
 	/**
 	 * Crea una nueva coordenada a partir de las posiciones de fila y
 	 * columna introducidas

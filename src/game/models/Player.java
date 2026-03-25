@@ -2,14 +2,14 @@ package game.models;
 
 import org.json.JSONObject;
 
-public class PlayerModel{
+public class Player{
 	public String nombre;
 	public int puntuacion;
 	/**
 	 * @param nombre
 	 * @param puntuacion
 	 */
-	public PlayerModel(String nombre, int puntuacion) {
+	public Player(String nombre, int puntuacion) {
 		this.nombre = nombre;
 		this.puntuacion = puntuacion;
 	}
@@ -39,7 +39,7 @@ public class PlayerModel{
 	public boolean equals(Object obj) {
 		if(obj == null)
 			return false;
-		return ((PlayerModel)obj).nombre.equals(nombre);
+		return ((Player)obj).nombre.equals(nombre);
 	}
 	 
 	

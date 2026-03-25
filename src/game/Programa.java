@@ -30,8 +30,8 @@ import javax.swing.SwingConstants;
 import org.json.JSONWriter;
 
 import game.models.Coordenada;
-import game.models.PlayerModel;
-import game.models.RankingModel;
+import game.models.Player;
+import game.models.Ranking;
 import game.services.RankingService;
 
 //Tengo que revisar el momento en el que chequeo si puede chocar, pq puede "colisionar"
@@ -445,8 +445,8 @@ public class Programa {
 	public static void actualizarRanking(String fichero, Dato puntos) {
 		//Creo q funciona? Ojala y lo haga, pq vaya quebradero de cabeza
 		RankingService servicio = new RankingService();
-		RankingModel modelo = new RankingModel(servicio.obtenerPlayers());
-		modelo.añadirPlayer(new PlayerModel(fichero.replaceAll("([a-z]*).bin", "$1"), puntos.valorInt));
+		Ranking modelo = new Ranking(servicio.obtenerPlayers());
+		modelo.añadirPlayer(new Player(fichero.replaceAll("([a-z]*).bin", "$1"), puntos.valorInt));
 		servicio.guardar(modelo.getPlayers());
 	}
 	/**

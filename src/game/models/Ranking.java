@@ -3,22 +3,22 @@ package game.models;
 import java.util.Arrays;
 import java.util.Comparator;
 
-public class RankingModel {
-	private PlayerModel[] players;
+public class Ranking {
+	private Player[] players;
 
 	/**
 	 * Constructor del modelo, se contruye en base a el array que le pases<br>
 	 * "Igual deberia usar service directamente en el constructor pa montarlo?"
 	 * @param players Los players almacenados en el ranking, obtenidos con el servicio normalmente
 	 */
-	public RankingModel(PlayerModel[] players) {
+	public Ranking(Player[] players) {
 		this.players = players;
 	}
 	/**
 	 * TODO Ns si lo hay q documentar pero por si las moscas
 	 * @return
 	 */
-	public PlayerModel[] getPlayers() {
+	public Player[] getPlayers() {
 		return players;
 	}
 
@@ -35,7 +35,7 @@ public class RankingModel {
 	 * @param campeones Los jugadores que se almacenaran en el ranking (Solo
 	 *                  almacena los primeros 5)
 	 */
-	public void añadirPlayer(PlayerModel player) {// Igual tengo q meter aca la logica para evitar el duplicado
+	public void añadirPlayer(Player player) {// Igual tengo q meter aca la logica para evitar el duplicado
 		// Almacena el nuevo player si hace falta
 		int i= contiene(player);
 		if (i == -1) // Si no esta
@@ -52,7 +52,7 @@ public class RankingModel {
 	 * @param player
 	 * @return
 	 */
-	private int contiene(PlayerModel player) {
+	private int contiene(Player player) {
 		for (int i = 0; i < players.length; i++) {
 			if (player.equals(players[i]))//Entiendo q no puede dar problema por nulo
 				return i;

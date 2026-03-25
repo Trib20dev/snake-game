@@ -8,7 +8,7 @@ import java.io.PrintStream;
 import org.json.JSONObject;
 import org.json.JSONTokener;
 
-import game.models.PlayerModel;
+import game.models.Player;
 
 public class RankingService {
 	private static final String[] POSITIONS = { "First", "Second", "Third", "Fourth", "Fifth" };
@@ -16,14 +16,14 @@ public class RankingService {
 	 * TODO Devuelve los players en el ranking.json en formato Player[]
 	 * @return
 	 */
-	public PlayerModel[] obtenerPlayers() {
-		PlayerModel[] aP = new PlayerModel[6];
+	public Player[] obtenerPlayers() {
+		Player[] aP = new Player[6];
 		try {
 			JSONObject jO = new JSONObject(new JSONTokener(new FileInputStream("src/game/guardado/ranking.json")));
 			for (int i = 0; i < POSITIONS.length; i++)
 				if (jO.get(POSITIONS[i]) != JSONObject.NULL) {
 					JSONObject jOb = (JSONObject) jO.get(POSITIONS[i]);
-					aP[i] = new PlayerModel(jOb.getString("Nombre"), jOb.getInt("Puntos"));
+					aP[i] = new Player(jOb.getString("Nombre"), jOb.getInt("Puntos"));
 				}
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
@@ -42,7 +42,7 @@ public class RankingService {
 	 * @param campeones Los jugadores que se almacenaran en el ranking (Solo
 	 *                  almacena los primeros 5)
 	 */
-	public void guardar(PlayerModel[] campeones) {
+	public void guardar(Player[] campeones) {
 		//Almacena los 5 de mayor puntuacion q le pases
 		try (PrintStream pS = new PrintStream(new FileOutputStream("src/game/guardado/ranking.json"))) {
 			JSONObject jO = new JSONObject();
