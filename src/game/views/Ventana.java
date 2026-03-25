@@ -1,4 +1,4 @@
-package game;
+package game.views;
 
 import java.awt.Color;
 import java.awt.Container;
@@ -13,6 +13,7 @@ import java.awt.event.MouseEvent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 
+import game.Dato;
 import game.models.Player;
 import game.models.Ranking;
 import game.services.RankingService;

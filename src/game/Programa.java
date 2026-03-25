@@ -33,6 +33,7 @@ import game.models.Coordenada;
 import game.models.Player;
 import game.models.Ranking;
 import game.services.RankingService;
+import game.views.Ventana;
 
 //Tengo que revisar el momento en el que chequeo si puede chocar, pq puede "colisionar"
 //con la cola que debería desaparecer en el mismo momento... Despues

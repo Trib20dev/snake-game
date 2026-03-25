@@ -6,7 +6,7 @@ package game.models;
  * espacial en el ambiente correspondiente
  */
 public class Coordenada {
-	public int fila, columna;
+	public int f, c;
 
 	/**
 	 * Crea una nueva coordenada a partir de las posiciones de fila y columna
@@ -16,8 +16,8 @@ public class Coordenada {
 	 * @param columna Posición en la columna
 	 */
 	public Coordenada(int fila, int columna) {
-		this.fila = fila;
-		this.columna = columna;
+		this.f = fila;
+		this.c = columna;
 	}
 
 	/**
@@ -30,8 +30,8 @@ public class Coordenada {
 	 * @param columna Incremento de la columna respecto a la coordenada introducida
 	 */
 	public Coordenada(Coordenada cord, int filas, int columnas) {
-		this.fila = cord.fila + filas;
-		this.columna = cord.columna + columnas;
+		f = cord.f + filas;
+		c = cord.c + columnas;
 	}
 
 	@Override
@@ -40,8 +40,8 @@ public class Coordenada {
 			return true;
 		if (obj == null || this.getClass() != obj.getClass())
 			return false;
-		Coordenada c = (Coordenada)obj;
-		return fila==c.fila && columna==c.columna;
+		Coordenada cord = (Coordenada)obj;
+		return f==cord.f && c==cord.c;
 	}
 
 }

@@ -9,6 +9,7 @@ public class Snake {
 	private Direccion direccion, nuevaDireccion;
 	private Coordenada cabeza, manzana;// Ns si necesitare cabeza
 	private Dimension cuadricula;
+	private boolean crece; // Voy a usarlo para la logica de moverse
 
 	/**
 	 * Constructor en el que lo unico que debes pasar es el tamaño que tendra la
@@ -24,7 +25,7 @@ public class Snake {
 		cabeza = serpiente.getLast();
 		direccion = Direccion.DERECHA;
 		nuevaDireccion = Direccion.DERECHA;
-		crearManzanita();
+		crece = false;
 	}
 
 	public LinkedList<Coordenada> getSerpiente() {
@@ -70,8 +71,6 @@ public class Snake {
 	 */
 	public void mover() {// Volvio a mover, pq aca tiene mas sentido
 		int f = 0, c = 0;
-		boolean crece = false;
-
 		switch (nuevaDireccion) {
 		case DERECHA -> c++;
 		case IZQUIERDA -> c--;
@@ -81,14 +80,15 @@ public class Snake {
 
 		serpiente.add(new Coordenada(cabeza, f, c));// Se añade la nueva cabeza
 		cabeza = serpiente.getLast();
-		// Puedo mirar si se come manzana, pero ya
-		if (cabeza == manzana) {
-			crece = true;
-			crearManzanita();
-		}
-		if (!crece)
+		if (!crece) {// Si no crece, elimina la cola
 			serpiente.removeFirst();// Si no crecio, fuera cola
+			crece = false;
+		}
 
+	}
+	
+	public void actualizarDireccion() {
+		direccion = nuevaDireccion;
 	}
 
 }
