@@ -29,6 +29,7 @@ import javax.swing.SwingConstants;
 
 import org.json.JSONWriter;
 
+import game.models.Coordenada;
 import game.models.PlayerModel;
 import game.models.RankingModel;
 import game.services.RankingService;

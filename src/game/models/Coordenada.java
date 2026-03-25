@@ -1,4 +1,4 @@
-package game;
+package game.models;
 /**
  * Clase utilizada para representar una coordenada, cuenta con una variable {@code fila} 
  * y otra {@code columna} para poder representar su posicion espacial en el ambiente 
