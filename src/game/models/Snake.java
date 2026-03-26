@@ -1,6 +1,7 @@
 package game.models;
 
 import java.awt.Dimension;
+import java.awt.event.KeyEvent;
 import java.util.LinkedList;
 import java.util.Random;
 
@@ -21,7 +22,7 @@ public class Snake {
 		cuadricula = new Dimension(filas, columnas);
 		// Establecer el principio
 		for (int i = 0, f = (int) (cuadricula.getWidth() / 2 - 2), c = (int) (cuadricula.getHeight() / 2); i < 5; i++)
-			serpiente.add(new Coordenada(f++, c++));
+			serpiente.add(new Coordenada(f, c++));
 		cabeza = serpiente.getLast();
 		direccion = Direccion.DERECHA;
 		nuevaDireccion = Direccion.DERECHA;
@@ -80,15 +81,37 @@ public class Snake {
 
 		serpiente.add(new Coordenada(cabeza, f, c));// Se añade la nueva cabeza
 		cabeza = serpiente.getLast();
-		if (!crece) {// Si no crece, elimina la cola
-			serpiente.removeFirst();// Si no crecio, fuera cola
+		if (!crece) {// Si no crece
+			serpiente.removeFirst();// Fuera cola
 			crece = false;
 		}
 
 	}
-	
+
 	public void actualizarDireccion() {
 		direccion = nuevaDireccion;
+	}
+
+	public void declararIntencion(Direccion dir) {
+		switch (dir) {
+		case ARRIBA -> {
+			if (direccion != Direccion.ABAJO)
+				nuevaDireccion = dir;
+		}
+		case ABAJO -> {
+			if (direccion != Direccion.ARRIBA)
+				nuevaDireccion = dir;
+		}
+		case DERECHA -> {
+			if (direccion != Direccion.IZQUIERDA)
+				nuevaDireccion = dir;
+		}
+		case IZQUIERDA -> {
+			if (direccion != Direccion.DERECHA)
+				nuevaDireccion = dir;
+		}
+		}
+
 	}
 
 }

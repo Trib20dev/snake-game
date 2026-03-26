@@ -13,6 +13,10 @@ public class Game {
 		return snake;
 	}
 	
+	public Coordenada getManzana() {
+		return manzana;
+	}
+	
 	public Score getScore() {
 		return score;
 	}
@@ -69,7 +73,7 @@ public class Game {
 	}
 
 	public boolean comio() {
-		return snake.getCabeza() == manzana;
+		return snake.getCabeza().equals(manzana);
 	}
 	
 }

@@ -1,12 +1,11 @@
 package game.demo;
 
-import game.Programa;
+import game.controllers.GameController;
 
 public class Main {
 	public static void main(String[] args) {
-		Programa p = new Programa(20, 20);
-		p.start();
-//		Programa.reset();
+		GameController game = new GameController(); //Ahora mismo no le puedes decir el tamaño q quieres
+		game.start();
 	}
 }	
 
