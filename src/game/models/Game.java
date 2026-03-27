@@ -42,7 +42,7 @@ public class Game {
 		Coordenada cabeza = snake.getCabeza();
 		if(snake.getSerpiente().stream().filter(e -> e.equals(cabeza)).count()>1)
 			return false;
-		if(cabeza.f > cuadricula.width || cabeza.c > cuadricula.height)
+		if(cabeza.f > cuadricula.height-1 || cabeza.c > cuadricula.width-1 || cabeza.f<0 || cabeza.c<0)
 			return false;
 		return true;
 	}

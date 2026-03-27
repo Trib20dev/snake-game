@@ -1,16 +1,13 @@
 package game.models;
 
 import java.awt.Dimension;
-import java.awt.event.KeyEvent;
 import java.util.LinkedList;
-import java.util.Random;
 
 public class Snake {
 	private LinkedList<Coordenada> serpiente;
 	private Direccion direccion, nuevaDireccion;
-	private Coordenada cabeza, manzana;// Ns si necesitare cabeza
+	private Coordenada cabeza, cola;// Ns si necesitare cabeza
 	private Dimension cuadricula;
-	private boolean crece; // Voy a usarlo para la logica de moverse
 
 	/**
 	 * Constructor en el que lo unico que debes pasar es el tamaño que tendra la
@@ -24,9 +21,9 @@ public class Snake {
 		for (int i = 0, f = (int) (cuadricula.getWidth() / 2 - 2), c = (int) (cuadricula.getHeight() / 2); i < 5; i++)
 			serpiente.add(new Coordenada(f, c++));
 		cabeza = serpiente.getLast();
+		cola = serpiente.getFirst();
 		direccion = Direccion.DERECHA;
 		nuevaDireccion = Direccion.DERECHA;
-		crece = false;
 	}
 
 	public LinkedList<Coordenada> getSerpiente() {
@@ -45,23 +42,6 @@ public class Snake {
 		return cabeza;
 	}
 
-	public Coordenada getManzana() {
-		return manzana;
-	}
-
-	/**
-	 * Crea una manzana en una posicion aleatoria que no coincida con la serpiente
-	 * 
-	 * @param pantalla
-	 */
-	public void crearManzanita() {
-		Random ran = new Random();
-		Coordenada c = cabeza;
-		while (serpiente.contains(c))
-			c = new Coordenada(ran.nextInt(cuadricula.width), ran.nextInt(cuadricula.height));
-		manzana = c;
-	}
-
 	/**
 	 * Mueve la serpiente y crea una nueva manzana si la come<br>
 	 * Puedo revisar posteriormente si muere convirtiendo la lista en un stream y
@@ -78,13 +58,9 @@ public class Snake {
 		case ARRIBA -> f--;
 		case ABAJO -> f++;
 		}
-
 		serpiente.add(new Coordenada(cabeza, f, c));// Se añade la nueva cabeza
 		cabeza = serpiente.getLast();
-		if (!crece) {// Si no crece
-			serpiente.removeFirst();// Fuera cola
-			crece = false;
-		}
+		serpiente.removeFirst();//Fuera cola (El crece() la añade de vuelta si hace falta)
 
 	}
 
@@ -112,6 +88,16 @@ public class Snake {
 		}
 		}
 
+	}
+	/**
+	 * Hay que llamarlo si o si en cada tick, para que pueda crecer la serpiente
+	 * @param b
+	 */
+	public void crece(boolean b) { //No es eficiente, y necesitaria un rework -_-
+		if (b)
+			serpiente.addFirst(cola);
+		else
+			cola = serpiente.getFirst();
 	}
 
 }
