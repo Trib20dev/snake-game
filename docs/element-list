@@ -1,4 +1,6 @@
 game
+game.controllers
 game.demo
 game.models
 game.services
+game.views
