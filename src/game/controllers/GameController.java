@@ -99,8 +99,9 @@ public class GameController {
 
 	public void onGamesEnd() {
 		gView.hide();
+		gView.dispose();
 //		gView.gameOver(); //Esto fue una recomendacion q recibi de chati, igual le hago algo aca, ns
-		dView.volverAJugar();
+//		dView.volverAJugar(); Esta roto por ahora
 		
 	}
 

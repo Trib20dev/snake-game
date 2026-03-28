@@ -173,4 +173,10 @@ public class GameView {
 		frame.setVisible(false);
 	}
 
+	/**
+	 * Temporal method
+	 */
+	public void dispose() {
+		frame.dispose();
+	}
 }
