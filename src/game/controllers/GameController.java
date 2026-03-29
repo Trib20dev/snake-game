@@ -99,9 +99,21 @@ public class GameController {
 
 	public void onGamesEnd() {
 		gView.hide();
-		gView.dispose();
-//		gView.gameOver(); //Esto fue una recomendacion q recibi de chati, igual le hago algo aca, ns
-//		dView.volverAJugar(); Esta roto por ahora
+		dView.show();
+	}
+
+	public void onRankIconPressed() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void onBNamePressed() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void onBReplayPressed() {
+		// TODO Auto-generated method stub
 		
 	}
 

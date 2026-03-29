@@ -52,7 +52,7 @@ public class GameView {
 	 */
 	private void configurarFrame() {
 		frame.setLayout(null);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frame.setVisible(true);
 		Insets insets = frame.getInsets();
 		frame.setPreferredSize(new Dimension(400 + insets.left + insets.right, 600 + insets.top + insets.bottom));
