@@ -72,8 +72,13 @@ public class Game {
 		manzana = c;
 	}
 
-	public boolean comio() {
+	public boolean come() {
 		return snake.getCabeza().equals(manzana);
+	}
+	
+	public void restart() {
+		score.points = 0;
+		snake = new Snake(20, 20);
 	}
 	
 }

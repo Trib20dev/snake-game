@@ -4,6 +4,8 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.PrintStream;
+import java.util.Arrays;
+import java.util.Comparator;
 
 import org.json.JSONObject;
 import org.json.JSONTokener;
@@ -44,15 +46,31 @@ public class RankingService {
 	 * @param campeones Los jugadores que se almacenaran en el ranking (Solo
 	 *                  almacena los primeros 5)
 	 */
-	public void guardar(Player[] campeones) {
+	public void update(Player player) {
+		Player[] campeones = obtenerPlayers();
+		int i = contiene(campeones, player);
+		if(i == -1)
+			campeones[5] = player;			
+		else if (player.puntuacion > campeones[i].puntuacion) 
+			campeones[i] = player;
+		
+		Arrays.sort(campeones, Comparator.nullsLast((a,b) -> a.puntuacion - b.puntuacion)); //Ns si esto hace el truco, pero por probar
 		//Almacena los 5 de mayor puntuacion q le pases
 		try (PrintStream pS = new PrintStream(new FileOutputStream("src/game/guardado/ranking.json"))) {
 			JSONObject jO = new JSONObject();
-			for (int i = 0; i < POSITIONS.length; i++)
-				jO.put(POSITIONS[i], (campeones[i] != null) ? campeones[i].asJson() : JSONObject.NULL);
+			for (int j = 0; j < POSITIONS.length; j++)
+				jO.put(POSITIONS[j], (campeones[j] != null) ? campeones[j].asJson() : JSONObject.NULL);
 			pS.print(jO.toString(2));
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
 	}
+	
+	private int contiene(Player[] ps, Player p) {
+		for(int i=0;i<6;i++)
+			if(ps[i] != null && ps[i].getNombre().equals(p.getNombre()))
+				return i;
+		return -1;
+	}
+	
 }

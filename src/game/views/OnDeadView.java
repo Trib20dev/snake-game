@@ -66,7 +66,7 @@ public class OnDeadView {
 	}
 
 	private void configureCTitle() {
-		cTitle.setLayout(new FlowLayout(FlowLayout.CENTER, 20, 10)); // No le he de poner v-gap, q aumenta de mas
+		cTitle.setLayout(new FlowLayout(FlowLayout.CENTER, 20, 0)); // No le he de poner v-gap, q aumenta de mas
 		title.setPreferredSize(new Dimension(200, 60));
 		title.setHorizontalAlignment(SwingConstants.CENTER);
 		title.setText("¿Que harás?");

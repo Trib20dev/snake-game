@@ -1,4 +1,4 @@
-package game;
+package game.models;
 /**
  * Excepción capturable empleada para comunicar la muerte de la serpiente
  */

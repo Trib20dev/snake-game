@@ -6,32 +6,42 @@ import java.awt.event.KeyEvent;
 
 import javax.swing.Timer;
 
-import game.DeadSnakeException;
-import game.models.Coordenada;
+import game.models.DeadSnakeException;
 import game.models.Direccion;
 import game.models.Game;
+import game.models.Player;
+import game.services.RankingService;
 import game.services.ScoreService;
 import game.views.GameView;
 import game.views.InputView;
 import game.views.OnDeadView;
+import game.views.RankingView;
 
 public class GameController {
 	private GameView gView;
 	private InputView iView;
 	private OnDeadView dView;
+	private RankingView rView;
 	private ScoreService sService;
+	private RankingService rService;
 	private Game game;
+	
+	private String name;
 
 	public GameController(/* int f, int c */) { // Va a no ser adaptable el tamaño de ña cuadrícula :D
 		gView = new GameView();
-		iView = new InputView();
 		dView = new OnDeadView();
+		iView = new InputView();
+		rView = new RankingView();
 		
 		gView.setController(this);
+		dView.setgController(this);
+		
+		rService = new RankingService();
 	}
 
 	public void start() {
-		String name = iView.obtenerNombre();// Ns si cambiar el name de aca o no
+		name = iView.obtenerNombre();// Ns si cambiar el name de aca o no
 		sService = new ScoreService(name);
 		game = new Game(20, 20, sService.obtenerPuntuacionMaxima()); // Debería crear bien el game
 
@@ -45,9 +55,8 @@ public class GameController {
 		return iView.obtenerNombre();
 	}
 
-	private void startGameLoop() { // Igual me veo obligado a volverlo un thread, o lo trabajo con evento el fin,
-									// no se
-		new Timer(150, new ActionListener() {
+	private void startGameLoop() {
+		Timer t = new Timer(150, new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -59,7 +68,9 @@ public class GameController {
 				}
 
 			}
-		}).start();
+		});
+		t.setInitialDelay(2000);
+		t.start();
 	}
 	/**
 	 * Representa un tick del juego
@@ -69,7 +80,7 @@ public class GameController {
 		game.getSnake().mover();
 		if (!game.isAlive())
 			throw new DeadSnakeException();
-		if (game.comio()) { //Si comio
+		if (game.come()) { //Si comio
 			game.getSnake().crece(true);// Ns como poner la logica para este crece
 			game.aumentarPuntuacion();
 			if (game.getScore().points > game.getScore().mPoints)
@@ -98,23 +109,34 @@ public class GameController {
 	}
 
 	public void onGamesEnd() {
+		int p = game.getScore().mPoints;
 		gView.hide();
+		sService.actualizarPuntuacionMaxima(p);
+		rService.update(new Player(name, p));
+		rView.render(rService.obtenerPlayers());
 		dView.show();
 	}
 
 	public void onRankIconPressed() {
-		// TODO Auto-generated method stub
+		if(rView.isVisible())
+			rView.hide();
+		else
+			rView.show();
 		
 	}
 
-	public void onBNamePressed() {
-		// TODO Auto-generated method stub
-		
+	public void onBNamePressed() { //TODO no funciona por ahora, a ver si despues del rewoek va bien
+		dView.hide();
+//		iView.show();
+		start();
 	}
 
 	public void onBReplayPressed() {
-		// TODO Auto-generated method stub
-		
+		game.restart();
+		dView.hide();
+		gView.render(game);
+		gView.show();
+		startGameLoop();
 	}
 
 }

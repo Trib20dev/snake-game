@@ -26,7 +26,7 @@ public class InputView {
 	 */
 	public String obtenerNombre() {
 		JFrame ventana = new JFrame();
-
+		
 		Container cTitulo = new Container();
 		cTitulo.setLayout(new GridLayout(1, 1));
 		cTitulo.setVisible(true);
@@ -112,8 +112,10 @@ public class InputView {
 			}
 
 		}).run();
-
-		ventana.dispose();
-		return textArea.getText().replace(" ", "").toLowerCase() + ".bin";
+		ventana.setVisible(false);
+		return textArea.getText().replace(" ", "").toLowerCase();
 	}
+	
+
+	
 }
