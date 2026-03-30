@@ -1,6 +1,5 @@
-game
-game.controllers
-game.demo
-game.models
-game.services
-game.views
+controllers
+demo
+models
+services
+views
