@@ -89,7 +89,7 @@ public class OnDeadView {
 		// Configure the change name button
 		bName.setPreferredSize(new Dimension(110, 50));
 		bName.setHorizontalAlignment(SwingConstants.CENTER);
-		bName.setText("Cambiar nombre"); // TODO centra correctamente texto
+		bName.setText("Cambiar nombre");
 		bName.setOpaque(true);
 		bName.setBackground(Color.white);
 		bName.addMouseListener(new MouseAdapter() {

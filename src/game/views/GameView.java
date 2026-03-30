@@ -3,15 +3,19 @@ package game.views;
 import java.awt.Color;
 import java.awt.Container;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.Insets;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.nio.InvalidMarkException;
 
 import javax.swing.BorderFactory;
+import javax.swing.BoxLayout;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
 import game.controllers.GameController;
@@ -22,6 +26,7 @@ import game.models.Snake;
 public class GameView {
 	private GameController gController;
 	private JFrame frame;
+	private JPanel mainPanel;
 	private Container cCuadricula;
 	private JLabel[][] lCuadricula;
 	private Container cPuntuacion;
@@ -31,6 +36,7 @@ public class GameView {
 
 	public GameView() {
 		frame = new JFrame();
+		mainPanel = new JPanel();
 		cCuadricula = new Container();
 		cCuadricula = new Container();
 		lCuadricula = new JLabel[20][20];
@@ -46,19 +52,39 @@ public class GameView {
 	}
 
 	// Metodos de configuracion
+	/**
+	 * Una agrupacion de todas las configuraciones que debes hacer en la ventana<br>
+	 * Este metodo fue creado con el objetivo de facilitar la lectura del codigo
+	 */
+	public void configurarVentana() {
+		configurarCCuadricula();
+		configurarContenedorPuntuacion();
+		configureCMaxPoints();
+		configureMainPanel();
+		configurarFrame();
+	}
 
+	private void configureMainPanel() {
+		mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
+		mainPanel.add(cPuntuacion);
+		mainPanel.add(cMaxPuntuacion);
+		mainPanel.add(cCuadricula);
+	}
+	
 	/**
 	 * Configura el frame que contendra la puntuacion y la cuadricula del juego
 	 */
 	private void configurarFrame() {
-		frame.setLayout(null);
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		frame.setVisible(true);
-		Insets insets = frame.getInsets();
-		frame.setPreferredSize(new Dimension(400 + insets.left + insets.right, 600 + insets.top + insets.bottom));
-		frame.setVisible(false);
+		frame.add(mainPanel);
 		frame.pack();
 		frame.setResizable(false);
+		frame.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				gController.onGamePressed(e);
+			}
+		});
 	}
 
 	/**
@@ -70,21 +96,18 @@ public class GameView {
 	private void configurarContenedorPuntuacion() {
 		lPuntuacion.setOpaque(true);
 		lPuntuacion.setVisible(true);
-		lPuntuacion.setText(String.format("POINTS: %03d", 000));// Tiene un medio centrado con espacios por ahora
-		lPuntuacion.setBackground(Color.white);
-		lPuntuacion.setHorizontalTextPosition(SwingConstants.CENTER); // Ns pq pero no va
-		lPuntuacion.setFont(new Font("Puntuacion?", Font.BOLD, 50));// Necesito usar esto pq es lo q encontre para el
-																	// tamaño del texto
+		lPuntuacion.setText(String.format("POINTS: %03d", 000));
+		lPuntuacion.setBackground(Color.white); 
+		lPuntuacion.setFont(new Font("Puntuacion?", Font.BOLD, 50));
+		lPuntuacion.setPreferredSize(new Dimension(400, 100));
 		cPuntuacion.add(lPuntuacion);
-		cPuntuacion.setBounds(0, 0, 400, 100); // Le da la posicion que quiere ocupar tambien, q es encima de la casilla
-												// (solo funciona pq el layout del frame lo puse en null)
-		cPuntuacion.setLayout(new GridLayout(1, 1));// Forma q encontre pa q se mostrase el cabron
+		cPuntuacion.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 0));
 	}
 
 	/**
 	 * Crea los cuadradiños y asigna la cuadricula al container
 	 */
-	private void configurarContenedorCuadricula() { // Tiene a tamaño fijo la cuadricula
+	private void configurarCCuadricula() { // Tiene a tamaño fijo la cuadricula
 		cCuadricula.setLayout(new GridLayout(20, 20));
 
 		// Se crean y almacenan como "blancos" los labels
@@ -97,43 +120,22 @@ public class GameView {
 				lCuadricula[i][j] = l;
 				cCuadricula.add(lCuadricula[i][j]); // Me tomo mi rato averiguar q hacerle a esto
 			}
-
-		cCuadricula.setBounds(0, 200, 400, 400); // Pasa también la posición
+		cCuadricula.setPreferredSize(new Dimension(400, 400)); // Pasa también la posición
 	}
 
 	/**
 	 * Configura el contenedor que contiene la maxima puntuacion en la ventana
 	 */
-	public void configurarContenedorMaxPoints() {
-		cMaxPuntuacion.setBounds(0, 100, 400, 100);
-		cMaxPuntuacion.setVisible(true);
+	public void configureCMaxPoints() {
 		lMaxPuntuacion.setText(String.format("M.POINTS: %03d", 000));
-		cMaxPuntuacion.setLayout(new GridLayout(1, 1));
 		lMaxPuntuacion.setFont(new Font("Puntuacion?", Font.BOLD, 50));
 		lMaxPuntuacion.setOpaque(true);
 		lMaxPuntuacion.setBackground(Color.white);
+		lMaxPuntuacion.setPreferredSize(new Dimension(400, 100));
+		cMaxPuntuacion.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 0));
 		cMaxPuntuacion.add(lMaxPuntuacion);
 	}
 
-	/**
-	 * Una agrupacion de todas las configuraciones que debes hacer en la ventana<br>
-	 * Este metodo fue creado con el objetivo de facilitar la lectura del codigo
-	 */
-	public void configurarVentana() {
-		configurarContenedorCuadricula();
-		configurarContenedorPuntuacion();
-		configurarContenedorMaxPoints();
-		frame.add(cPuntuacion);
-		frame.add(cMaxPuntuacion);
-		frame.add(cCuadricula);
-		configurarFrame();// Ns q mas configuraciones necesita este frame, por ahora no creo q mas
-		frame.addKeyListener(new KeyAdapter() {
-			@Override
-			public void keyPressed(KeyEvent e) {
-				gController.onGamePressed(e);
-			}
-		});
-	}
 
 	/**
 	 * Cambia el color del background de la coordenada especificada dentro de la
