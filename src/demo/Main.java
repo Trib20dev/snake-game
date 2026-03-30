@@ -1,10 +1,15 @@
 package demo;
 
 import controllers.GameController;
-
-public class Main {
+/**
+ * Clase principal para iniciar el juego Snake.
+ * <p>
+ * Crea una instancia del controlador del juego y llama al método start para
+ * iniciar la lógica y mostrar la interfaz.
+ */
+public class Main {	
 	public static void main(String[] args) {
-		GameController game = new GameController(); //Ahora mismo no le puedes decir el tamaño q quieres
+		GameController game = new GameController(); 
 		game.start();
 	}
 }	

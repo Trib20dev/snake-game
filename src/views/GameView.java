@@ -6,23 +6,25 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
-import java.awt.Insets;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.nio.InvalidMarkException;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.SwingConstants;
 
 import controllers.GameController;
 import models.Coordenada;
 import models.Game;
 import models.Snake;
-
+/**
+ * Vista principal del juego Snake.
+ * <p>
+ * Se encarga de mostrar la cuadrícula del juego, la puntuación actual y la puntuación máxima.
+ * Cada celda de la cuadrícula se representa con un JLabel, y se actualiza en cada tick del juego.
+ */
 public class GameView {
 	private GameController gController;
 	private JFrame frame;
@@ -33,7 +35,9 @@ public class GameView {
 	private JLabel lPuntuacion;
 	private Container cMaxPuntuacion;
 	private JLabel lMaxPuntuacion;
-
+	/**
+     * Constructor que inicializa los componentes gráficos de la ventana del juego.
+     */
 	public GameView() {
 		frame = new JFrame();
 		mainPanel = new JPanel();
@@ -46,16 +50,19 @@ public class GameView {
 		lMaxPuntuacion = new JLabel();
 		configurarVentana();
 	}
-
+	/**
+     * Asigna el controlador que gestionará los eventos del juego.
+     *
+     * @param gController controlador de la vista
+     */
 	public void setController(GameController gController) {
 		this.gController = gController;
 	}
 
-	// Metodos de configuracion
+	 // --- Configuración de la ventana y contenedores ---
 	/**
-	 * Una agrupacion de todas las configuraciones que debes hacer en la ventana<br>
-	 * Este metodo fue creado con el objetivo de facilitar la lectura del codigo
-	 */
+     * Configura todos los componentes de la ventana: cuadrícula, puntuaciones y frame.
+     */
 	public void configurarVentana() {
 		configurarCCuadricula();
 		configurarContenedorPuntuacion();
@@ -63,7 +70,9 @@ public class GameView {
 		configureMainPanel();
 		configurarFrame();
 	}
-
+	/**
+     * Configura el panel principal que contiene puntuaciones y cuadrícula.
+     */
 	private void configureMainPanel() {
 		mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
 		mainPanel.add(cPuntuacion);
@@ -72,8 +81,8 @@ public class GameView {
 	}
 	
 	/**
-	 * Configura el frame que contendra la puntuacion y la cuadricula del juego
-	 */
+     * Configura el JFrame principal de la ventana del juego, incluyendo el KeyListener para controlar la serpiente.
+     */
 	private void configurarFrame() {
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frame.add(mainPanel);
@@ -88,11 +97,8 @@ public class GameView {
 	}
 
 	/**
-	 * 
-	 * @param containerPuntuacion
-	 * @param lPuntuacion
-	 * @param puntos
-	 */
+     * Configura el contenedor que muestra la puntuación actual del jugador.
+     */
 	private void configurarContenedorPuntuacion() {
 		lPuntuacion.setOpaque(true);
 		lPuntuacion.setVisible(true);
@@ -105,8 +111,8 @@ public class GameView {
 	}
 
 	/**
-	 * Crea los cuadradiños y asigna la cuadricula al container
-	 */
+     * Crea la cuadrícula del juego como un grid de JLabels y la añade al contenedor principal.
+     */
 	private void configurarCCuadricula() { // Tiene a tamaño fijo la cuadricula
 		cCuadricula.setLayout(new GridLayout(20, 20));
 
@@ -124,8 +130,8 @@ public class GameView {
 	}
 
 	/**
-	 * Configura el contenedor que contiene la maxima puntuacion en la ventana
-	 */
+     * Configura el contenedor que muestra la puntuación máxima alcanzada.
+     */
 	public void configureCMaxPoints() {
 		lMaxPuntuacion.setText(String.format("M.POINTS: %03d", 000));
 		lMaxPuntuacion.setFont(new Font("Puntuacion?", Font.BOLD, 50));
@@ -136,19 +142,25 @@ public class GameView {
 		cMaxPuntuacion.add(lMaxPuntuacion);
 	}
 
-
-	/**
-	 * Cambia el color del background de la coordenada especificada dentro de la
-	 * cuadricula al color indicado
-	 * 
-	 * @param pantalla Matriz en la que ha de cambiar el color
-	 * @param posicion Coordenada concreta
-	 * @param color    Color del que quieres que sea la coordenada
-	 */
+	 // --- Métodos de renderizado y actualización ---
+	
+	 /**
+     * Cambia el color de fondo de una celda específica de la cuadrícula.
+     *
+     * @param pantalla matriz de labels de la cuadrícula
+     * @param posicion coordenada de la celda a colorear
+     * @param color    color que se aplicará
+     */
 	public static void color(JLabel[][] pantalla, Coordenada posicion, Color color) {
 		pantalla[posicion.f][posicion.c].setBackground(color);
 	}
-
+	/**
+     * Renderiza el estado actual del juego en la vista.
+     * <p>
+     * Se colorea la serpiente, la cabeza y la manzana, y se actualizan las puntuaciones.
+     *
+     * @param game instancia del juego a renderizar
+     */
 	public void render(Game game) {
 		clear();// Primero limpiamos
 
@@ -160,6 +172,9 @@ public class GameView {
 		lPuntuacion.setText(String.format("POINTS: %03d", game.getScore().points));
 		lMaxPuntuacion.setText(String.format("M.POINTS: %03d", game.getScore().mPoints));
 	}
+	/**
+     * Limpia toda la cuadrícula poniendo todas las celdas en blanco.
+     */
 
 	private void clear() {
 		for (int i = 0; i < 20; i++)
@@ -167,18 +182,20 @@ public class GameView {
 				lCuadricula[i][j].setBackground(Color.white);
 	}
 
+	  // --- Métodos de control de visibilidad ---
+	
+	/** Muestra la ventana del juego */
 	public void show() {
 		frame.setVisible(true);
 	}
-
+	
+	/** Oculta la ventana del juego */
 	public void hide() {
 		frame.setVisible(false);
 	}
 
-	/**
-	 * Temporal method
-	 */
-	public void dispose() {
-		frame.dispose();
-	}
+	/** Libera los recursos de la ventana */
+    public void dispose() {
+        frame.dispose();
+    }
 }

@@ -2,30 +2,57 @@ package models;
 
 import java.awt.Dimension;
 import java.util.Random;
-
+/**
+ * Representa la lógica del juego de la serpiente.
+ * <p>
+ * Gestiona la serpiente, la manzana, la puntuación y la cuadrícula del juego.
+ * Proporciona métodos para avanzar el juego, comprobar si la serpiente sigue viva
+ * y generar manzanas aleatorias.
+ */
 public class Game {
+	 /** Posición actual de la manzana en la cuadrícula */
 	private Coordenada manzana;
+	 /** Dimensiones de la cuadrícula del juego */
 	private Dimension cuadricula;
+	 /** Serpiente del juego */
 	private Snake snake;
+	/** Puntuación actual y máxima alcanzada */
 	private Score score;
-	
+	 /**
+     * Devuelve la serpiente actual.
+     * 
+     * @return objeto Snake que representa la serpiente
+     */
 	public Snake getSnake() {
 		return snake;
 	}
-	
+	/**
+     * Devuelve la posición actual de la manzana.
+     * 
+     * @return coordenada de la manzana
+     */
 	public Coordenada getManzana() {
 		return manzana;
 	}
-	
+	/**
+     * Devuelve la puntuación del juego.
+     * 
+     * @return objeto Score con la puntuación actual y máxima
+     */
 	public Score getScore() {
 		return score;
 	}
 	
 	/**
-	 * Constructor
-	 * @param f filas que tendra la cuadricula
-	 * @param c columnas que tendra la cuadricula
-	 */
+     * Constructor del juego.
+     * <p>
+     * Inicializa la serpiente, la cuadrícula, la puntuación y genera una manzana
+     * aleatoria.
+     * 
+     * @param f         número de filas de la cuadrícula
+     * @param c         número de columnas de la cuadrícula
+     * @param maxPoints puntuación máxima inicial del jugador
+     */
 	public Game(int f, int c, int maxPoints) {
 		this.snake = new Snake(f,c);
 		this.cuadricula = new Dimension(f,c);
@@ -34,10 +61,15 @@ public class Game {
 		crearManzanita();
 	}
 	
-	/**
-	 * Metodo para comprobar despues de moverse si la serpiente puede vivir
-	 * @return true if it can live and keep going, false if not
-	 */
+	 /**
+     * Comprueba si la serpiente sigue viva.
+     * <p>
+     * La serpiente muere si colisiona consigo misma o con los límites de la
+     * cuadrícula.
+     * 
+     * @return {@code true} si la serpiente puede seguir moviéndose,
+     *         {@code false} si ha muerto
+     */
 	public boolean isAlive() { //Ns muy bien como llamarla, por ahora queda asi
 		Coordenada cabeza = snake.getCabeza();
 		if(snake.getSerpiente().stream().filter(e -> e.equals(cabeza)).count()>1)
@@ -48,7 +80,7 @@ public class Game {
 	}
 
 	/**
-	 * Aumenta en uno la puntuación 
+	 * Aumenta en uno la puntuación actual
 	 */
 	public void aumentarPuntuacion() { //Al final lo q es mas apropiado es q EL CONTROLADOR llame a este metodo
 		score.points++;
@@ -62,7 +94,7 @@ public class Game {
 	}
 
 	/**
-	 * Crea una manzana en una posicion aleatoria que no coincida con la serpiente
+	 * Genera una manzana en una posicion aleatoria que no coincida con la serpiente
 	 */
 	public void crearManzanita() {
 		Random ran = new Random();
@@ -71,11 +103,18 @@ public class Game {
 			c = new Coordenada(ran.nextInt(cuadricula.width), ran.nextInt(cuadricula.height));
 		manzana = c;
 	}
-
+	/**
+     * Comprueba si la serpiente ha comido la manzana.
+     * 
+     * @return {@code true} si la cabeza de la serpiente coincide con la manzana,
+     *         {@code false} en caso contrario
+     */
 	public boolean come() {
 		return snake.getCabeza().equals(manzana);
 	}
-	
+	/**
+     * Reinicia el juego, creando una nueva serpiente y reseteando la puntuación.
+     */
 	public void restart() {
 		score.points = 0;
 		snake = new Snake(20, 20);

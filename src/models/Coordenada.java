@@ -6,7 +6,10 @@ package models;
  * espacial en el ambiente correspondiente
  */
 public class Coordenada {
-	public int f, c;
+	/** Fila de la coordenada */
+	public int f;
+	/** Columna de la coordenada */
+	public int c;
 
 	/**
 	 * Crea una nueva coordenada a partir de las posiciones de fila y columna
@@ -25,15 +28,20 @@ public class Coordenada {
 	 * tomando sus filas y columnas e incrementandolas en el valor indicado en los
 	 * parametros fila y columna
 	 * 
-	 * @param cord    Coordena a clonar
-	 * @param fila    Incremento de la fila respecto a la coordenada introducida
-	 * @param columna Incremento de la columna respecto a la coordenada introducida
+	 * @param cord    Coordenada a clonar
+	 * @param filas    Incremento de la fila respecto a la coordenada introducida
+	 * @param columnas Incremento de la columna respecto a la coordenada introducida
 	 */
 	public Coordenada(Coordenada cord, int filas, int columnas) {
 		f = cord.f + filas;
 		c = cord.c + columnas;
 	}
-	
+	/**
+	 * Comprueba si dos coordenadas son iguales comparando fila y columna.
+	 *
+	 * @param obj Objeto a comparar
+	 * @return {@code true} si la fila y columna coinciden, {@code false} en caso contrario
+	 */
 	@Override
 	public boolean equals(Object obj) { // Por lo que encontre es la manera tipica de escribirlo
 		if (this == obj)

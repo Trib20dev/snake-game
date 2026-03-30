@@ -14,7 +14,24 @@ import views.GameView;
 import views.InputView;
 import views.OnDeadView;
 import views.RankingView;
-
+/**
+ * Controlador principal del juego.
+ * <p>
+ * Gestiona la interacción entre las vistas y los servicios del juego:
+ * <ul>
+ *   <li>GameView: vista principal del juego</li>
+ *   <li>OnDeadView: vista mostrada al perder</li>
+ *   <li>InputView: vista para introducir el nombre del jugador</li>
+ *   <li>RankingView: vista del ranking de puntuaciones</li>
+ * </ul>
+ * <p>
+ * Controla el flujo del juego mediante métodos de evento (onSomethingPressed)
+ * y un bucle principal {@code startGameLoop()} que actualiza el estado
+ * del juego y renderiza las vistas correspondientes.
+ * <p>
+ * Esta clase se inicializa desde la clase Main y constituye el punto central
+ * de la lógica de presentación y control del juego.
+ */
 public class GameController {
 	private GameView gView;
 	private InputView iView;
@@ -26,6 +43,20 @@ public class GameController {
 
 	private String name;
 
+	/**
+	 * Inicializa el controlador del juego creando las vistas y servicios necesarios.
+	 * <p>
+	 * Se crean las siguientes vistas:
+	 * <ul>
+	 *  <li>GameView (vista del juego)</li>
+	 *  <li>OnDeadView (vista del fin de partida)</li>
+	 *  <li>InputView (vista de entrada de nombre)</li>
+	 *  <li>RankingView (vista de ranking)</li>
+	 * </ul>
+	 * Ademas, se inicializa el servicio de ranking.
+	 * <p>
+	 * Cada vista recibe una referencia al controlador para poder comunicarse con el.
+	 */
 	public GameController(/* int f, int c */) { // Va a no ser adaptable el tamaño de ña cuadrícula :D
 		gView = new GameView();
 		dView = new OnDeadView();
@@ -39,54 +70,78 @@ public class GameController {
 		rService = new RankingService();
 	}
 
+	/**
+	 * Hace visible la interfaz de seleccion de nombre
+	 * <p>
+	 * Este metodo se llama desde la clase Main para comenzar la aplicacion y
+	 * permitir que el jugador ingrese su nombre antes de iniciar la partida
+	 */
 	public void start() {
 		iView.show();
 	}
 
-//	public String obtenerNombre() {
-//		return iView.obtenerNombre();
-//	}
-
+	/**
+	 * Inicia el bucle principal del juego mediante un temporizador
+	 * <p>
+	 * Cuenta con un retardo inicial de 2 segundos Ejecuta un tick en el juego de
+	 * forma periodica Si la serpiente muere, detiene el temporizador y finaliza la
+	 * partida
+	 */
 	private void startGameLoop() {
-		Timer t = new Timer(150, e -> {
+		Timer t = new Timer(150, null);
+
+		t.addActionListener(e -> {
 			try {
 				tick();
 			} catch (DeadSnakeException e1) {
-				((Timer) e.getSource()).stop();
-	            onGamesEnd();
+				t.stop();
+				onGamesEnd();
 			}
 		});
+
 		t.setInitialDelay(2000);
 		t.start();
 	}
 
 	/**
-	 * Representa un tick del juego
+	 * Ejecuta un ciclo de actualización del juego
+	 * <p>
+	 * En cada tick:
+	 * <ul>
+	 * <li>Mueve la serpiente</li>
+	 * <li>Comprueba si la serpiente sigue viva</li>
+	 * <li>Gestiona la ingesta de comida (crecimiento y puntuacion)</li>
+	 * <li>Actualiza la dirección de movimiento</li>
+	 * <li>Renderiza el nuevo estado del juego</li>
+	 * </ul>
 	 * 
-	 * @throws DeadSnakeException Señaliza la finalizacion del juego por muerte de
-	 *                            la serpiente
+	 * @throws DeadSnakeException Si la serpiente muere durante el tick
 	 */
 	public void tick() throws DeadSnakeException {
 		game.getSnake().mover();
 		if (!game.isAlive())
 			throw new DeadSnakeException();
-		if (game.come()) { // Si comio
-			game.getSnake().crece(true);// Ns como poner la logica para este crece
+		if (game.come()) { // TODO Separar a un metodo la logica de comida
+			game.getSnake().crece(true);
 			game.aumentarPuntuacion();
 			if (game.getScore().points > game.getScore().mPoints)
 				game.aumentarMaxPuntuacion();
 			game.crearManzanita();
-		} else // Si no comio
+		} else
 			game.getSnake().crece(false);
-		game.getSnake().actualizarDireccion(); // Necesario pa poder giraraa
-		// No soy consciente de si le falta algo... me gustaría pensar que no
-		gView.render(game);
+		game.getSnake().actualizarDireccion();
+
+	 	gView.render(game);
 	}
 
 	/**
-	 * TODO ns si mover pa aqui la logiva respecto a la direccion o no...
+	 * Procesa la entrado de teclado durante la partida y acutaliza la direccion de
+	 * la serpiente en consecuencia
+	 * <p>
+	 * Mapea las teclas WASD y las flechas de direccion a las direcciones
+	 * correspondientes del juego
 	 * 
-	 * @param e
+	 * @param e El evento generado por la tecla pulsada
 	 */
 	public void onGamePressed(KeyEvent e) {
 		switch (e.getKeyCode()) {
@@ -98,6 +153,17 @@ public class GameController {
 
 	}
 
+	/**
+	 * Maneja el momento en que el jugador pierde
+	 * <ul>
+	 * <li>Oculta la vista del juego (gView)</li>
+	 * <li>Actualiza la puntuacion maxima en los archivos locales (sService)</li>
+	 * <li>Actualiza el ranking en vase a la nueva puntuacion alcanzada
+	 * (rService)</li>
+	 * <li>Renderiza la vista de ranking con los nuevos datos (rView)</li>
+	 * <li>Muestra la vista de seleccion de replay (dView)</li>
+	 * </ul>
+	 */
 	public void onGamesEnd() {
 		int p = game.getScore().mPoints;
 		gView.hide();
@@ -107,6 +173,11 @@ public class GameController {
 		dView.show();
 	}
 
+	/**
+	 * Alterna la visibilidad de la vista del ranking
+	 * <p>
+	 * Si la vista esta visible, la oculta; en caso contraio, la muestra
+	 */
 	public void onRankIconPressed() {
 		if (rView.isVisible())
 			rView.hide();
@@ -115,20 +186,54 @@ public class GameController {
 
 	}
 
-	public void onBNamePressed() { // TODO no funciona por ahora, a ver si despues del rewoek va bien
+	/**
+	 * Maneja el evento de cambio de nombre en la vista de replay
+	 * <p>
+	 * Realiza las siguientes acciones:
+	 * <ul>
+	 *  <li>Oculta la vista de replay (dView)</li>
+	 *  <li>Oculta la vista de ranking (rView)</li>
+	 *  <li>Muestra la vista de seleccion de nombre (iView)</li>
+	 * </ul>
+	 */
+	public void onBNamePressed() {
 		dView.hide();
 		rView.hide();
 		iView.show();
 	}
-
+	/**
+	 * Maneja el evento de "Volver a jugar" en la vista de replay
+	 * <p>
+	 * Realiza las siguientes acciones:
+	 * <ul>
+	 *  <li>Reinicia la puntuacion y el estado de la serpiente</li>
+	 *  <li>Oculta la vista de replay (dView) y la vista del ranking (rView)</li>
+	 *  <li>Renderiza el estado reiniciado del juego en gView</li>
+	 *  <li>Muestra la vista del juego</li>
+	 *  <li>Inicia el bucle principal del juego mediante {@code startGameLoop()}</li>
+	 * </ul>
+	 */
 	public void onBReplayPressed() {
 		game.restart();
 		dView.hide();
+		rView.hide();
 		gView.render(game);
 		gView.show();
 		startGameLoop();
 	}
-
+	/**
+	 * Gestiona el evento de pulsar Enter en la vista de selección de nombre.
+	 * <p>
+	 * Valida el nombre introducido y, si es correcto, inicializa el juego:
+	 * <ul>
+	 *   <li>Normaliza el nombre (minúsculas y sin espacios)</li>
+	 *   <li>Inicia los servicios y la partida</li>
+	 *   <li>Muestra la vista del juego</li>
+	 *   <li>Inicia el bucle del juego</li>
+	 * </ul>
+	 *
+	 * @param e evento de teclado que contiene la tecla pulsada
+	 */
 	public void onNameKeyPressed(KeyEvent e) {
 		if (e.getKeyCode() == KeyEvent.VK_BACK_SPACE) {
 			if (iView.getText().length() > 1)
@@ -153,7 +258,7 @@ public class GameController {
 		} else if (e.getKeyChar() != KeyEvent.CHAR_UNDEFINED)
 			if (iView.getText().length() < 11)
 				iView.setText(iView.getText() + e.getKeyChar());
-		
+
 	}
 
 }
