@@ -1,4 +1,4 @@
-package game.models;
+package models;
 
 /**
  * Clase utilizada para representar una coordenada, cuenta con una variable

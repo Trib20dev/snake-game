@@ -1,4 +1,4 @@
-package game.views;
+package views;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -11,7 +11,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
-import game.models.Player;
+import models.Player;
 
 public class RankingView {
 	private JFrame frame;

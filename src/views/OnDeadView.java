@@ -1,4 +1,4 @@
-package game.views;
+package views;
 
 import java.awt.Color;
 import java.awt.Container;
@@ -14,7 +14,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
-import game.controllers.GameController;
+import controllers.GameController;
 
 public class OnDeadView {
 

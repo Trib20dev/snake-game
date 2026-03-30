@@ -1,6 +1,6 @@
-package game.demo;
+package demo;
 
-import game.controllers.GameController;
+import controllers.GameController;
 
 public class Main {
 	public static void main(String[] args) {

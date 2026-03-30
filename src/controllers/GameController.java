@@ -1,19 +1,19 @@
-package game.controllers;
+package controllers;
 
 import java.awt.event.KeyEvent;
 
 import javax.swing.Timer;
 
-import game.models.DeadSnakeException;
-import game.models.Direccion;
-import game.models.Game;
-import game.models.Player;
-import game.services.RankingService;
-import game.services.ScoreService;
-import game.views.GameView;
-import game.views.InputView;
-import game.views.OnDeadView;
-import game.views.RankingView;
+import models.DeadSnakeException;
+import models.Direccion;
+import models.Game;
+import models.Player;
+import services.RankingService;
+import services.ScoreService;
+import views.GameView;
+import views.InputView;
+import views.OnDeadView;
+import views.RankingView;
 
 public class GameController {
 	private GameView gView;

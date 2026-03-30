@@ -1,4 +1,4 @@
-package game.services;
+package services;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
@@ -19,7 +19,7 @@ public class ScoreService {
 	 *        utilizado para localizar o formar su archivo binario
 	 */
 	public ScoreService(String nombre) {
-		rutaFichero = "src/game/guardado/" + nombre + ".bin";
+		rutaFichero = "src/data/bin/" + nombre + ".bin";
 	}
 
 	/**

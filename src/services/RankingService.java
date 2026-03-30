@@ -1,4 +1,4 @@
-package game.services;
+package services;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -10,7 +10,7 @@ import java.util.Comparator;
 import org.json.JSONObject;
 import org.json.JSONTokener;
 
-import game.models.Player;
+import models.Player;
 
 public class RankingService {
 	private static final String[] POSITIONS = { "First", "Second", "Third", "Fourth", "Fifth" };
@@ -21,7 +21,7 @@ public class RankingService {
 	public Player[] obtenerPlayers() {
 		Player[] aP = new Player[6];
 		try {
-			JSONObject jO = new JSONObject(new JSONTokener(new FileInputStream("src/game/guardado/ranking.json")));
+			JSONObject jO = new JSONObject(new JSONTokener(new FileInputStream("src/data/ranking.json")));
 			for (int i = 0; i < POSITIONS.length; i++)
 				if (jO.get(POSITIONS[i]) != JSONObject.NULL) {
 					JSONObject jOb = (JSONObject) jO.get(POSITIONS[i]);
@@ -56,7 +56,7 @@ public class RankingService {
 		
 		Arrays.sort(campeones, Comparator.nullsLast((a,b) -> b.puntuacion - a.puntuacion)); //Ns si esto hace el truco, pero por probar
 		//Almacena los 5 de mayor puntuacion q le pases
-		try (PrintStream pS = new PrintStream(new FileOutputStream("src/game/guardado/ranking.json"))) {
+		try (PrintStream pS = new PrintStream(new FileOutputStream("src/data/ranking.json"))) {
 			JSONObject jO = new JSONObject();
 			for (int j = 0; j < POSITIONS.length; j++)
 				jO.put(POSITIONS[j], (campeones[j] != null) ? campeones[j].asJson() : JSONObject.NULL);

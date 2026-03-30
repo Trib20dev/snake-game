@@ -1,4 +1,4 @@
-package game.models;
+package models;
 
 import org.json.JSONObject;
 
