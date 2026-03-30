@@ -1,7 +1,5 @@
 package game.controllers;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 
 import javax.swing.Timer;
@@ -25,7 +23,7 @@ public class GameController {
 	private ScoreService sService;
 	private RankingService rService;
 	private Game game;
-	
+
 	private String name;
 
 	public GameController(/* int f, int c */) { // Va a no ser adaptable el tamaño de ña cuadrícula :D
@@ -33,54 +31,46 @@ public class GameController {
 		dView = new OnDeadView();
 		iView = new InputView();
 		rView = new RankingView();
-		
+
 		gView.setController(this);
 		dView.setgController(this);
-		
+		iView.setController(this);
+
 		rService = new RankingService();
 	}
 
 	public void start() {
-		name = iView.obtenerNombre();// Ns si cambiar el name de aca o no
-		sService = new ScoreService(name);
-		game = new Game(20, 20, sService.obtenerPuntuacionMaxima()); // Debería crear bien el game
-
-		gView.render(game);
-		gView.show();
-
-		startGameLoop(); // Aqui si entraria a lo que formaria el bucle
+		iView.show();
 	}
 
-	public String obtenerNombre() {
-		return iView.obtenerNombre();
-	}
+//	public String obtenerNombre() {
+//		return iView.obtenerNombre();
+//	}
 
 	private void startGameLoop() {
-		Timer t = new Timer(150, new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				try {
-					tick();
-				} catch (DeadSnakeException e1) {
-					((Timer) e.getSource()).stop(); // Voy entendiendo como hacer esto, creo
-					onGamesEnd();
-				}
-
+		Timer t = new Timer(150, e -> {
+			try {
+				tick();
+			} catch (DeadSnakeException e1) {
+				((Timer) e.getSource()).stop();
+	            onGamesEnd();
 			}
 		});
 		t.setInitialDelay(2000);
 		t.start();
 	}
+
 	/**
 	 * Representa un tick del juego
-	 * @throws DeadSnakeException Señaliza la finalizacion del juego por muerte de la serpiente
+	 * 
+	 * @throws DeadSnakeException Señaliza la finalizacion del juego por muerte de
+	 *                            la serpiente
 	 */
 	public void tick() throws DeadSnakeException {
 		game.getSnake().mover();
 		if (!game.isAlive())
 			throw new DeadSnakeException();
-		if (game.come()) { //Si comio
+		if (game.come()) { // Si comio
 			game.getSnake().crece(true);// Ns como poner la logica para este crece
 			game.aumentarPuntuacion();
 			if (game.getScore().points > game.getScore().mPoints)
@@ -88,7 +78,7 @@ public class GameController {
 			game.crearManzanita();
 		} else // Si no comio
 			game.getSnake().crece(false);
-		game.getSnake().actualizarDireccion(); //Necesario pa poder giraraa
+		game.getSnake().actualizarDireccion(); // Necesario pa poder giraraa
 		// No soy consciente de si le falta algo... me gustaría pensar que no
 		gView.render(game);
 	}
@@ -118,17 +108,17 @@ public class GameController {
 	}
 
 	public void onRankIconPressed() {
-		if(rView.isVisible())
+		if (rView.isVisible())
 			rView.hide();
 		else
 			rView.show();
-		
+
 	}
 
-	public void onBNamePressed() { //TODO no funciona por ahora, a ver si despues del rewoek va bien
+	public void onBNamePressed() { // TODO no funciona por ahora, a ver si despues del rewoek va bien
 		dView.hide();
-//		iView.show();
-		start();
+		rView.hide();
+		iView.show();
 	}
 
 	public void onBReplayPressed() {
@@ -137,6 +127,33 @@ public class GameController {
 		gView.render(game);
 		gView.show();
 		startGameLoop();
+	}
+
+	public void onNameKeyPressed(KeyEvent e) {
+		if (e.getKeyCode() == KeyEvent.VK_BACK_SPACE) {
+			if (iView.getText().length() > 1)
+				iView.setText(iView.getText().substring(0, iView.getText().length() - 1));
+		} else if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+			if (iView.getText().replace(" ", "").toLowerCase().matches("[a-z]*") && iView.getText().length() > 1) {
+				name = iView.getText().replace(" ", "").toLowerCase();
+				iView.hide();
+				iView.clear();
+				sService = new ScoreService(name);
+				game = new Game(20, 20, sService.obtenerPuntuacionMaxima()); // Debería crear bien el game
+				gView.render(game);
+				gView.show();
+				startGameLoop(); // Aqui si entraria a lo que formaria el bucle
+			} else {
+				iView.warning(true);
+				Timer t = new Timer(2000, j -> iView.warning(false));
+				t.setRepeats(false);
+				t.start();
+			}
+
+		} else if (e.getKeyChar() != KeyEvent.CHAR_UNDEFINED)
+			if (iView.getText().length() < 11)
+				iView.setText(iView.getText() + e.getKeyChar());
+		
 	}
 
 }

@@ -1,7 +1,19 @@
 {
-  "Second": null,
-  "Third": null,
-  "First": null,
-  "Fourth": null,
+  "Second": {
+    "Nombre": "hector",
+    "Puntos": 5
+  },
+  "Third": {
+    "Nombre": "dani",
+    "Puntos": 3
+  },
+  "First": {
+    "Nombre": "pepe",
+    "Puntos": 6
+  },
+  "Fourth": {
+    "Nombre": "asier",
+    "Puntos": 1
+  },
   "Fifth": null
 }

@@ -14,7 +14,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
-import game.Dato;
 import game.controllers.GameController;
 
 public class OnDeadView {

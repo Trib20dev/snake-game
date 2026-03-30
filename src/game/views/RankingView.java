@@ -75,6 +75,7 @@ public class RankingView {
 		for (var label : ranks) {
 			label.setOpaque(true);
 			label.setBackground(Color.white);
+			label.setFont(new Font("Arial", Font.BOLD, 20));
 			label.setPreferredSize(new Dimension(200, 30));
 		}
 	}
@@ -91,7 +92,7 @@ public class RankingView {
 		for (int i = 0; i < 5; i++)
 			if (rankers[i] != null)
 				ranks[i].setText(
-						String.format("%1dº %-12s: %03d", i + 1, rankers[i].getNombre(), rankers[i].getPuntuacion()));
+						String.format("%dº %-10s: %03d", i + 1, rankers[i].getNombre(), rankers[i].getPuntuacion()));
 			else 
 				ranks[i].setText(String.format("%1d", i + 1));
 

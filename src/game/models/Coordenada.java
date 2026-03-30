@@ -33,7 +33,7 @@ public class Coordenada {
 		f = cord.f + filas;
 		c = cord.c + columnas;
 	}
-
+	
 	@Override
 	public boolean equals(Object obj) { // Por lo que encontre es la manera tipica de escribirlo
 		if (this == obj)

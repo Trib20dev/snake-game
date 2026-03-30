@@ -54,7 +54,7 @@ public class RankingService {
 		else if (player.puntuacion > campeones[i].puntuacion) 
 			campeones[i] = player;
 		
-		Arrays.sort(campeones, Comparator.nullsLast((a,b) -> a.puntuacion - b.puntuacion)); //Ns si esto hace el truco, pero por probar
+		Arrays.sort(campeones, Comparator.nullsLast((a,b) -> b.puntuacion - a.puntuacion)); //Ns si esto hace el truco, pero por probar
 		//Almacena los 5 de mayor puntuacion q le pases
 		try (PrintStream pS = new PrintStream(new FileOutputStream("src/game/guardado/ranking.json"))) {
 			JSONObject jO = new JSONObject();
