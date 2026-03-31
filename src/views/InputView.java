@@ -12,6 +12,7 @@ import javax.swing.BoxLayout;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
 import controllers.GameController;
@@ -40,7 +41,7 @@ public class InputView {
 	private Container cTitle;
 	private JLabel title;
 	private Container cTextArea;
-	private JLabel textArea;
+	private JTextField textArea;
 	private Container cWarning;
 	private JLabel warning;
 	/**
@@ -53,7 +54,7 @@ public class InputView {
 		cTitle = new Container();
 		title = new JLabel();
 		cTextArea = new Container();
-		textArea = new JLabel();
+		textArea = new JTextField();
 		cWarning = new Container();
 		warning = new JLabel();
 		configurar();
@@ -141,13 +142,20 @@ public class InputView {
      */
 	private void configureCTextArea() {
 		textArea.setPreferredSize(new Dimension(150, 40));
-		textArea.setOpaque(true);
-		textArea.setBackground(Color.white);
+//		textArea.setOpaque(true);
+//		textArea.setBackground(Color.white);
 		textArea.setText(" ");
-		textArea.setFont(new Font("Arial", Font.BOLD, 15));
+		textArea.setFont(new Font("Arial", Font.BOLD, 20));
+		textArea.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				gController.onNameKeyPressed(e);
+			}
+		});
 		cTextArea.setLayout(new FlowLayout());
 		cTextArea.setPreferredSize(new Dimension(250, 60));
 		cTextArea.add(textArea);
+		
 	}
     /**
      * Configura el contenedor que muestra mensajes de advertencia (por ejemplo, nombre inválido).
@@ -174,12 +182,6 @@ public class InputView {
      */
 	private void configureFrame() {
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		frame.addKeyListener(new KeyAdapter() {
-			@Override
-			public void keyPressed(KeyEvent e) {
-				gController.onNameKeyPressed(e);
-			}
-		});
 		frame.add(mainPanel);
 		frame.pack();
 		frame.setResizable(false);

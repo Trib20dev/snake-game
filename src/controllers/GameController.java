@@ -235,10 +235,10 @@ public class GameController {
 	 * @param e evento de teclado que contiene la tecla pulsada
 	 */
 	public void onNameKeyPressed(KeyEvent e) {
-		if (e.getKeyCode() == KeyEvent.VK_BACK_SPACE) {
-			if (iView.getText().length() > 1)
-				iView.setText(iView.getText().substring(0, iView.getText().length() - 1));
-		} else if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+		if (iView.getText().length() >= 10) //Tiene un error un poco raro cuando pasas de 10
+            iView.setText(iView.getText().substring(0,10));
+        
+		if (e.getKeyCode() == KeyEvent.VK_ENTER) {
 			if (iView.getText().replace(" ", "").toLowerCase().matches("[a-z]*") && iView.getText().length() > 1) {
 				name = iView.getText().replace(" ", "").toLowerCase();
 				iView.hide();
@@ -255,9 +255,8 @@ public class GameController {
 				t.start();
 			}
 
-		} else if (e.getKeyChar() != KeyEvent.CHAR_UNDEFINED)
-			if (iView.getText().length() < 11)
-				iView.setText(iView.getText() + e.getKeyChar());
+		} 
+		
 
 	}
 
