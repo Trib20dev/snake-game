@@ -5,6 +5,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 import models.Player;
 
@@ -64,6 +65,22 @@ public class DbScoreService {
 			e.printStackTrace();
 		}
 		
+	}
+	
+	public Player[] getTop5Ranked() {
+		Statement getTop;
+		Player players[] = new Player[5];
+		int c = 0;
+		try {
+			getTop = con.createStatement();
+			ResultSet rs = getTop.executeQuery("SELECT name,points FROM scores ORDER BY points DESC LIMIT 5");
+			while(rs.next());
+				players[c++] = new Player(rs.getString("name"), rs.getInt("points"));
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return players;
 	}
 	
 	
