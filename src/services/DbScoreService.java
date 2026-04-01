@@ -20,22 +20,26 @@ public class DbScoreService {
 		
 	}
 	
-	public Player getPLayer(String name) {
-	String playerName = "";
-	int points = 0;
+	public int getPoints(String name){
 		try {
 			PreparedStatement prpStmnt = con.prepareStatement("SELECT name, points FROM scores WHERE name = ?");
 			prpStmnt.setString(1, name);
 			ResultSet rs = prpStmnt.executeQuery();
-			if(!rs.next()) return null;
-			playerName = rs.getString("name");
-			points = rs.getInt("points");
+			if(!rs.next()) return 0;
+			return rs.getInt("points");
 		
 		} catch (SQLException e) {
-			e.printStackTrace();
+			e.printStackTrace();;
 		}
-		return new Player(playerName, points);
 	}
+	
+	public void saveOrUpdate() {
+		
+	}
+	
+	
+	
+	
 	
 	
 	
