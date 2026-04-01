@@ -31,9 +31,38 @@ public class DbScoreService {
 		} catch (SQLException e) {
 			e.printStackTrace();;
 		}
+		return 0;
 	}
 	
-	public void saveOrUpdate() {
+	public void saveOrUpdate(Player player) {
+		PreparedStatement insertStmt = null;
+		PreparedStatement updateStmt = null;
+		PreparedStatement getPointsStmt = null;
+		try {
+			insertStmt = con.prepareStatement("INSERT INTO scores VALUES (null, ?, ?)");
+			getPointsStmt = con.prepareStatement("SELECT points FROM scores WHERE name = ?");
+			updateStmt = con.prepareStatement("UPDATE scores SET points = ? WHERE name = ? ");
+			
+			getPointsStmt.setString(1, player.nombre);
+			
+			if(getPointsStmt.executeQuery().next()) {
+				ResultSet rs = getPointsStmt.executeQuery();
+				rs.next();
+				int p = rs.getInt("points");
+				updateStmt.setInt(1, p);
+				updateStmt.setString(2, player.nombre);
+				if(player.puntuacion > p) {
+					updateStmt.execute();
+				}
+			} else {
+				insertStmt.setString(1, player.nombre);
+				insertStmt.setInt(1, player.puntuacion);
+				insertStmt.execute();
+			}
+				
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 		
 	}
 	
