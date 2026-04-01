@@ -1,6 +1,7 @@
 package demo;
 
 import controllers.GameController;
+import db.DataBaseInitializer;
 /**
  * Clase principal para iniciar el juego Snake.
  * <p>
@@ -9,8 +10,9 @@ import controllers.GameController;
  */
 public class Main {	
 	public static void main(String[] args) {
-		GameController game = new GameController(); 
-		game.start();
+		DataBaseInitializer.init();
+//		GameController game = new GameController(); 
+//		game.start();
 	}
 }	
 

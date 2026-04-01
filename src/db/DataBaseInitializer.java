@@ -7,13 +7,12 @@ import java.sql.Statement;
 
 public class DataBaseInitializer {
 	public static void init() {
-		try {
-			Connection con = DriverManager.getConnection("jdbc:sqlite:score.db");
+		try (Connection con = DriverManager.getConnection("jdbc:sqlite:src/data/score.db")){
 			Statement stmt = con.createStatement();
-			stmt.executeQuery("CREATE IF NOT EXISTS TABLE(id INTEGER, name VARCHAR(15), point INTEGER, PRIMARY KRY (id AUTONUMERIC))");
+			stmt.executeUpdate("CREATE TABLE IF NOT EXISTS scores(id INTEGER, name VARCHAR(15), point INTEGER, PRIMARY KEY (id AUTOINCREMENT))");
 		} catch (SQLException e) {
 			e.printStackTrace();
-		}
+		} 
 		
 	}
 }
