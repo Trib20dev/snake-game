@@ -4,7 +4,7 @@ import java.awt.event.KeyEvent;
 
 import javax.swing.Timer;
 
-import models.DeadSnakeException;
+import exceptions.DeadSnakeException;
 import models.Direccion;
 import models.Game;
 import models.Player;

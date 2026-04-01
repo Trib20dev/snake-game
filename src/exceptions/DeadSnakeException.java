@@ -1,4 +1,4 @@
-package models;
+package exceptions;
 /**
  * Excepción capturable empleada para comunicar la muerte de la serpiente
  */
