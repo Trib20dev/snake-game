@@ -5,6 +5,8 @@ import java.awt.event.KeyEvent;
 import javax.swing.Timer;
 
 import exceptions.DeadSnakeException;
+import models.ConfigurableSettings;
+import models.Difficulty;
 import models.Direccion;
 import models.Game;
 import models.Player;
@@ -40,7 +42,9 @@ public class GameController {
 //	private ScoreService sService;
 //	private RankingService rService;
 	private Game game;
-
+	private ConfigurableSettings cSettings;
+	private int speed;
+	
 	private String name;
 
 	/**
@@ -252,10 +256,18 @@ public class GameController {
 				t.setRepeats(false);
 				t.start();
 			}
-
 		} 
 		
 
+	}
+	
+	public void onDifPick(Difficulty dif) {
+		speed = switch (dif) {
+		case EASY -> cSettings.getEasySpeed();
+		case MEDIUM -> cSettings.getMediumSpeed();
+		case HARD -> cSettings.getHardSpeed();
+		default -> -1;
+		};
 	}
 
 }
