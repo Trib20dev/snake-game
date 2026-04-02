@@ -40,7 +40,7 @@ public class DbScoreService {
 		PreparedStatement updateStmt = null;
 		PreparedStatement getPointsStmt = null;
 		try {
-			insertStmt = con.prepareStatement("INSERT INTO scores VALUES (null, ?, ?)");
+			insertStmt = con.prepareStatement("INSERT INTO scores(name,points) VALUES (?, ?)");
 			getPointsStmt = con.prepareStatement("SELECT points FROM scores WHERE name = ?");
 			updateStmt = con.prepareStatement("UPDATE scores SET points = ? WHERE name = ? ");
 			
