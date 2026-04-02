@@ -74,7 +74,7 @@ public class DbScoreService {
 		try {
 			getTop = con.createStatement();
 			ResultSet rs = getTop.executeQuery("SELECT name,points FROM scores ORDER BY points DESC LIMIT 5");
-			while(rs.next());
+			while(rs.next())
 				players[c++] = new Player(rs.getString("name"), rs.getInt("points"));
 			
 		} catch (SQLException e) {
