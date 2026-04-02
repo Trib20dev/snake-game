@@ -257,8 +257,6 @@ public class GameController {
 				t.start();
 			}
 		} 
-		
-
 	}
 	
 	public void onDifPick(Difficulty dif) {
