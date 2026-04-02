@@ -7,6 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import models.Difficulty;
 import models.Player;
 
 public class DbScoreService {
@@ -35,16 +36,17 @@ public class DbScoreService {
 		return 0;
 	}
 	
-	public void saveOrUpdate(Player player) {
+	public void saveOrUpdate(Player player, Difficulty dif) {
 		PreparedStatement insertStmt = null;
 		PreparedStatement updateStmt = null;
 		PreparedStatement getPointsStmt = null;
 		try {
-			insertStmt = con.prepareStatement("INSERT INTO scores(name,points) VALUES (?, ?)");
-			getPointsStmt = con.prepareStatement("SELECT points FROM scores WHERE name = ?");
-			updateStmt = con.prepareStatement("UPDATE scores SET points = ? WHERE name = ? ");
+			insertStmt = con.prepareStatement("INSERT INTO scores(name,points) VALUES (?, ?, ?)");
+			getPointsStmt = con.prepareStatement("SELECT points FROM scores WHERE name = ? AND difficulty = ?");
+			updateStmt = con.prepareStatement("UPDATE scores SET points = ? WHERE name = ? AND difficulty = ?");
 			
 			getPointsStmt.setString(1, player.nombre);
+			getPointsStmt.setString(2, dif.toString());
 			
 			if(getPointsStmt.executeQuery().next()) {
 				ResultSet rs = getPointsStmt.executeQuery();
@@ -52,12 +54,14 @@ public class DbScoreService {
 				int p = rs.getInt("points");
 				updateStmt.setInt(1, p);
 				updateStmt.setString(2, player.nombre);
+				updateStmt.setString(3, dif.toString());
 				if(player.puntuacion > p) {
 					updateStmt.execute();
 				}
 			} else {
 				insertStmt.setString(1, player.nombre);
 				insertStmt.setInt(2, player.puntuacion);
+				insertStmt.setString(3, dif.toString());
 				insertStmt.execute();
 			}
 				
@@ -67,7 +71,7 @@ public class DbScoreService {
 		
 	}
 	
-	public Player[] getTop5Ranked() {
+	public Player[] getTop5Ranked(Difficulty dif) { //TODO work with difficulty
 		Statement getTop;
 		Player players[] = new Player[5];
 		int c = 0;

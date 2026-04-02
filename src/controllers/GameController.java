@@ -11,6 +11,7 @@ import models.Direccion;
 import models.Game;
 import models.Player;
 import services.DbScoreService;
+import views.DiffcultyView;
 import views.GameView;
 import views.InputView;
 import views.OnDeadView;
@@ -38,11 +39,11 @@ public class GameController {
 	private InputView iView;
 	private OnDeadView dView;
 	private RankingView rView;
+	private DiffcultyView diView;
 	private DbScoreService dService;
-//	private ScoreService sService;
-//	private RankingService rService;
 	private Game game;
 	private ConfigurableSettings cSettings;
+	private Difficulty difficulty;
 	private int speed;
 	
 	private String name;
@@ -66,10 +67,12 @@ public class GameController {
 		dView = new OnDeadView();
 		iView = new InputView();
 		rView = new RankingView();
+		diView = new DiffcultyView();
 
 		gView.setController(this);
 		dView.setgController(this);
 		iView.setController(this);
+		diView.setController(this);
 
 		dService = new DbScoreService();
 	}
@@ -92,7 +95,7 @@ public class GameController {
 	 * partida
 	 */
 	private void startGameLoop() {
-		Timer t = new Timer(150, null);
+		Timer t = new Timer(speed, null);
 
 		t.addActionListener(e -> {
 			try {
@@ -171,7 +174,7 @@ public class GameController {
 	public void onGamesEnd() {
 		int p = game.getScore().mPoints;
 		gView.hide();
-		dService.saveOrUpdate(new Player(name, p));
+		dService.saveOrUpdate(new Player(name, p), difficulty);
 		rView.render(dService.getTop5Ranked());
 		dView.show();
 	}
@@ -246,10 +249,7 @@ public class GameController {
 				name = iView.getText().replace(" ", "").toLowerCase();
 				iView.hide();
 				iView.clear();
-				game = new Game(20, 20, dService.getPoints(name)); // Debería crear bien el game
-				gView.render(game);
-				gView.show();
-				startGameLoop(); // Aqui si entraria a lo que formaria el bucle
+				diView.show();
 			} else {
 				iView.warning(true);
 				Timer t = new Timer(2000, j -> iView.warning(false));
@@ -260,12 +260,18 @@ public class GameController {
 	}
 	
 	public void onDifPick(Difficulty dif) {
+		difficulty = dif;
 		speed = switch (dif) {
 		case EASY -> cSettings.getEasySpeed();
 		case MEDIUM -> cSettings.getMediumSpeed();
 		case HARD -> cSettings.getHardSpeed();
 		default -> -1;
 		};
+		diView.hide();
+		game = new Game(20, 20, dService.getPoints(name)); // Debería crear bien el game
+		gView.render(game);
+		gView.show();
+		startGameLoop(); // Aqui si entraria a lo que formaria el bucle
 	}
 
 }
