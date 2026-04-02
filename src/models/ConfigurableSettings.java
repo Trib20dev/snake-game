@@ -1,5 +1,7 @@
 package models;
 
+import exceptions.StupidSpeedConfException;
+
 public class ConfigurableSettings {
 	private int easySpeed;
 	private int mediumSpeed;
@@ -9,10 +11,13 @@ public class ConfigurableSettings {
 		defaultSettings();
 	}
 	
-	private ConfigurableSettings(int easy, int medium, int hard) {
-		easySpeed = easy;
-		mediumSpeed = medium;
-		hardSpeed = hard;
+	private ConfigurableSettings(int[] speeds) throws StupidSpeedConfException{
+		for(int speed: speeds )
+			if(speed < 1 || speed > 500)
+				throw new StupidSpeedConfException();
+		easySpeed = speeds[0];
+		mediumSpeed = speeds[1];
+		hardSpeed = speeds[2];
 	}
 	
 	
