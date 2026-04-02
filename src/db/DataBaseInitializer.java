@@ -9,7 +9,7 @@ public class DataBaseInitializer {
 	public static void init() {
 		try (Connection con = DriverManager.getConnection("jdbc:sqlite:src/data/score.db")){
 			Statement stmt = con.createStatement();
-			stmt.executeUpdate("CREATE TABLE IF NOT EXISTS scores(id INTEGER, name VARCHAR(15), point INTEGER, PRIMARY KEY (id AUTOINCREMENT))");
+			stmt.executeUpdate("CREATE TABLE IF NOT EXISTS scores(id INTEGER, name VARCHAR(15), points INTEGER, PRIMARY KEY (id AUTOINCREMENT))");
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} 

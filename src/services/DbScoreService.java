@@ -14,7 +14,7 @@ public class DbScoreService {
 	
 	public DbScoreService() {
 		try {
-			con = DriverManager.getConnection("jdbc:sqlite:/src/data/scores.db");
+			con = DriverManager.getConnection("jdbc:sqlite:src/data/score.db");
 		} catch (SQLException e) {
 			e.printStackTrace(); //No deberia poder llegar a aca
 		}
@@ -57,7 +57,7 @@ public class DbScoreService {
 				}
 			} else {
 				insertStmt.setString(1, player.nombre);
-				insertStmt.setInt(1, player.puntuacion);
+				insertStmt.setInt(2, player.puntuacion);
 				insertStmt.execute();
 			}
 				
@@ -82,6 +82,8 @@ public class DbScoreService {
 		}
 		return players;
 	}
+	
+	
 	
 	
 	
