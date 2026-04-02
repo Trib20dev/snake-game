@@ -1,11 +1,11 @@
 # Compiled class files
 *.class
 
-#Binarie files
+#Binarie and db files
 *.bin
+*.db
 
 # Package Files
-*.jar
 *.war
 *.ear
 

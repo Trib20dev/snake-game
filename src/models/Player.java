@@ -1,7 +1,5 @@
 package models;
 
-import org.json.JSONObject;
-
 /**
  * Representa un jugador con un nombre y su puntuación.
  * <p>
@@ -23,20 +21,7 @@ public class Player {
 	public Player(String nombre, int puntuacion) {
 		this.nombre = nombre;
 		this.puntuacion = puntuacion;
-	}
-	
-	 /**
-     * Devuelve una representación en JSON del jugador.
-     *
-     * @return JSONObject con las claves "Nombre" y "Puntos"
-     */
-	public JSONObject asJson() {
-		JSONObject jO = new JSONObject();
-		jO.put("Nombre", nombre);
-		jO.put("Puntos", puntuacion);
-		return jO;
-	}
-	
+	}	
 	
 	 /**
      * Devuelve la representación en cadena del jugador.
