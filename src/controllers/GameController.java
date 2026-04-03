@@ -68,6 +68,7 @@ public class GameController {
 		iView = new InputView();
 		rView = new RankingView();
 		diView = new DifficultyView();
+		cSettings = new ConfigurableSettings();
 
 		gView.setController(this);
 		dView.setgController(this);

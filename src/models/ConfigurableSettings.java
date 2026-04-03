@@ -1,24 +1,28 @@
 package models;
 
-import exceptions.StupidSpeedConfException;
+//import exceptions.StupidSpeedConfException;
 
 public class ConfigurableSettings {
 	private int easySpeed;
 	private int mediumSpeed;
 	private int hardSpeed;
 	
-	private ConfigurableSettings() {
+	public ConfigurableSettings() {
 		defaultSettings();
 	}
-	
-	private ConfigurableSettings(int[] speeds) throws StupidSpeedConfException{
-		for(int speed: speeds )
-			if(speed < 1 || speed > 500)
-				throw new StupidSpeedConfException();
-		easySpeed = speeds[0];
-		mediumSpeed = speeds[1];
-		hardSpeed = speeds[2];
-	}
+//	/**
+//	 * El objetivo es por aca hacer algo que sea adaptable a leer por fichero despues
+//	 * @param speeds
+//	 * @throws StupidSpeedConfException
+//	 */
+//	private ConfigurableSettings(int[] speeds) throws StupidSpeedConfException{
+//		for(int speed: speeds )
+//			if(speed < 1 || speed > 500)
+//				throw new StupidSpeedConfException();
+//		easySpeed = speeds[0];
+//		mediumSpeed = speeds[1];
+//		hardSpeed = speeds[2];
+//	}
 	
 	
 	

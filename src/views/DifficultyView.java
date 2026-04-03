@@ -36,7 +36,6 @@ public class DifficultyView {
 		bHard = new JButton();
 		configurar();
 	}
-//	25 50 25 50 25 50 25
 
 	private void configurar() {
 		configureBEasy();
@@ -54,12 +53,12 @@ public class DifficultyView {
 	private void configureBMedium() {
 		bMedium.setPreferredSize(new Dimension(50,50));
 		bMedium.setBackground(Color.yellow);
-		bMedium.addActionListener(e -> gController.onDifPick(Difficulty.EASY));
+		bMedium.addActionListener(e -> gController.onDifPick(Difficulty.MEDIUM));
 	}
 	private void configureBHard() {
 		bHard.setPreferredSize(new Dimension(50,50));
 		bHard.setBackground(Color.red);
-		bHard.addActionListener(e -> gController.onDifPick(Difficulty.EASY));
+		bHard.addActionListener(e -> gController.onDifPick(Difficulty.HARD));
 	}
 	private void configurePButtons() {
 		pButtons.setLayout(new FlowLayout(FlowLayout.CENTER,25,10));

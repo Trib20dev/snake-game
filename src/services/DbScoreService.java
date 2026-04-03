@@ -41,7 +41,7 @@ public class DbScoreService {
 		PreparedStatement updateStmt = null;
 		PreparedStatement getPointsStmt = null;
 		try {
-			insertStmt = con.prepareStatement("INSERT INTO scores(name,points) VALUES (?, ?, ?)");
+			insertStmt = con.prepareStatement("INSERT INTO scores(name,points,difficulty) VALUES (?, ?, ?)");
 			getPointsStmt = con.prepareStatement("SELECT points FROM scores WHERE name = ? AND difficulty = ?");
 			updateStmt = con.prepareStatement("UPDATE scores SET points = ? WHERE name = ? AND difficulty = ?");
 			
@@ -72,12 +72,13 @@ public class DbScoreService {
 	}
 	
 	public Player[] getTop5Ranked(Difficulty dif) { //TODO work with difficulty
-		Statement getTop;
+		PreparedStatement getTop;
 		Player players[] = new Player[5];
 		int c = 0;
 		try {
-			getTop = con.createStatement();
-			ResultSet rs = getTop.executeQuery("SELECT name,points FROM scores ORDER BY points DESC LIMIT 5");
+			getTop = con.prepareStatement("SELECT name,points FROM scores WHERE difficulty = ? ORDER BY points DESC LIMIT 5");
+			getTop.setString(1, dif.toString());
+			ResultSet rs = getTop.executeQuery();
 			while(rs.next())
 				players[c++] = new Player(rs.getString("name"), rs.getInt("points"));
 			
