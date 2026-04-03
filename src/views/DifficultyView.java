@@ -1,28 +1,30 @@
 package views;
 
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.Font;
 
+import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.SwingConstants;
 
 import controllers.GameController;
 import models.Difficulty;
 
 public class DifficultyView {
 	private JFrame frame;
+	private JPanel mainPanel;
+	private JLabel title;
 	private JPanel pButtons;
 	private JButton bEasy;
 	private JButton bMedium;
 	private JButton bHard;
 	private GameController gController;
-	
-	public static void main(String[] args) {
-		DifficultyView dView = new DifficultyView();
-		dView.show();
-	}
 	
 	public void setController(GameController con) {
 		gController = con;
@@ -30,6 +32,8 @@ public class DifficultyView {
 	
 	public DifficultyView() {
 		frame = new JFrame();
+		mainPanel = new JPanel();
+		title = new JLabel();
 		pButtons = new JPanel();
 		bEasy = new JButton();
 		bMedium = new JButton();
@@ -42,6 +46,8 @@ public class DifficultyView {
 		configureBMedium();
 		configureBHard();
 		configurePButtons();
+		configureTitle();
+		configureMainPanel();
 		configureFrame();
 	}
 
@@ -66,10 +72,31 @@ public class DifficultyView {
 		pButtons.add(bEasy);
 		pButtons.add(bMedium);
 		pButtons.add(bHard);
+		
+		pButtons.setAlignmentX(Component.CENTER_ALIGNMENT);
+		
 	}
+	
+	private void configureTitle() {
+		title.setHorizontalAlignment(SwingConstants.CENTER);
+		title.setText("Dificultad");
+		title.setFont(new Font("Arial", Font.BOLD, 30));
+		title.setPreferredSize(new Dimension(250, 50));
+		title.setHorizontalAlignment(SwingConstants.CENTER);
+		
+		title.setAlignmentX(Component.CENTER_ALIGNMENT);
+		
+	}
+	
+	private void configureMainPanel() {
+		mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
+		mainPanel.add(title);
+		mainPanel.add(pButtons);
+	}
+	
 	private void configureFrame() {
 		frame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
-		frame.add(pButtons);
+		frame.add(mainPanel);
 		frame.pack();
 		frame.setLocationRelativeTo(null);
 		frame.setResizable(false);
