@@ -11,7 +11,7 @@ import javax.swing.JPanel;
 import controllers.GameController;
 import models.Difficulty;
 
-public class DiffcultyView {
+public class DifficultyView {
 	private JFrame frame;
 	private JPanel pButtons;
 	private JButton bEasy;
@@ -19,11 +19,16 @@ public class DiffcultyView {
 	private JButton bHard;
 	private GameController gController;
 	
+	public static void main(String[] args) {
+		DifficultyView dView = new DifficultyView();
+		dView.show();
+	}
+	
 	public void setController(GameController con) {
 		gController = con;
 	}
 	
-	public DiffcultyView() {
+	public DifficultyView() {
 		frame = new JFrame();
 		pButtons = new JPanel();
 		bEasy = new JButton();
@@ -66,6 +71,8 @@ public class DiffcultyView {
 	private void configureFrame() {
 		frame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 		frame.add(pButtons);
+		frame.pack();
+		frame.setLocationRelativeTo(null);
 		frame.setResizable(false);
 	}
 	

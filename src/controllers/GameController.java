@@ -11,7 +11,7 @@ import models.Direccion;
 import models.Game;
 import models.Player;
 import services.DbScoreService;
-import views.DiffcultyView;
+import views.DifficultyView;
 import views.GameView;
 import views.InputView;
 import views.OnDeadView;
@@ -39,7 +39,7 @@ public class GameController {
 	private InputView iView;
 	private OnDeadView dView;
 	private RankingView rView;
-	private DiffcultyView diView;
+	private DifficultyView diView;
 	private DbScoreService dService;
 	private Game game;
 	private ConfigurableSettings cSettings;
@@ -67,7 +67,7 @@ public class GameController {
 		dView = new OnDeadView();
 		iView = new InputView();
 		rView = new RankingView();
-		diView = new DiffcultyView();
+		diView = new DifficultyView();
 
 		gView.setController(this);
 		dView.setgController(this);
@@ -175,7 +175,7 @@ public class GameController {
 		int p = game.getScore().mPoints;
 		gView.hide();
 		dService.saveOrUpdate(new Player(name, p), difficulty);
-		rView.render(dService.getTop5Ranked());
+		rView.render(dService.getTop5Ranked(difficulty));
 		dView.show();
 	}
 
