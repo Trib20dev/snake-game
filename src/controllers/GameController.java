@@ -269,7 +269,7 @@ public class GameController {
 		default -> -1;
 		};
 		diView.hide();
-		game = new Game(20, 20, dService.getPoints(name)); // Debería crear bien el game
+		game = new Game(20, 20, dService.getPoints(name,dif)); // Debería crear bien el game
 		gView.render(game);
 		gView.show();
 		startGameLoop(); // Aqui si entraria a lo que formaria el bucle

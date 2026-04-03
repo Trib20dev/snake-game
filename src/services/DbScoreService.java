@@ -22,10 +22,11 @@ public class DbScoreService {
 		
 	}
 	
-	public int getPoints(String name){
+	public int getPoints(String name, Difficulty dif){
 		try {
-			PreparedStatement prpStmnt = con.prepareStatement("SELECT name, points FROM scores WHERE name = ?");
+			PreparedStatement prpStmnt = con.prepareStatement("SELECT name, points FROM scores WHERE name = ? AND difficulty = ?");
 			prpStmnt.setString(1, name);
+			prpStmnt.setString(2, dif.toString());
 			ResultSet rs = prpStmnt.executeQuery();
 			if(!rs.next()) return 0;
 			return rs.getInt("points");
@@ -71,7 +72,7 @@ public class DbScoreService {
 		
 	}
 	
-	public Player[] getTop5Ranked(Difficulty dif) { //TODO work with difficulty
+	public Player[] getTop5Ranked(Difficulty dif) {
 		PreparedStatement getTop;
 		Player players[] = new Player[5];
 		int c = 0;
