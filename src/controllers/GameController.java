@@ -74,6 +74,7 @@ public class GameController {
 		dView.setgController(this);
 		iView.setController(this);
 		diView.setController(this);
+		rView.serController(this);
 
 		dService = new DbScoreService();
 	}
@@ -274,5 +275,46 @@ public class GameController {
 		gView.show();
 		startGameLoop(); 
 	}
-
+	
+	public void onHide() {
+		Timer t = new Timer(5000,  e -> {
+			if(nonShown()) {
+				diView.dispose();
+				gView.dispose();
+				iView.dispose();
+				dView.dispose();
+				rView.dispose();
+			}
+		});
+		t.setRepeats(false);
+		t.start();
+	}
+	
+	private boolean nonShown() {
+		if(!diView.isVisible()&&!gView.isVisible()&&!iView.isVisible()&&!dView.isVisible()&&rView.isVisible())
+			return true;
+		return false;
+	}
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

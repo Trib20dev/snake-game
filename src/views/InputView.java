@@ -106,6 +106,7 @@ public class InputView {
      */
 	public void hide() {
 		frame.setVisible(false);
+		gController.onHide();
 	}
 	/**
      * Limpia el contenido del área de entrada dejando un espacio en blanco.
@@ -186,5 +187,13 @@ public class InputView {
 		frame.pack();
 		frame.setResizable(false);
 		frame.setLocationRelativeTo(null);
+	}
+	
+	public boolean isVisible() {
+		return frame.isVisible();
+	}
+	
+	public void dispose() {
+		frame.dispose();
 	}
 }
