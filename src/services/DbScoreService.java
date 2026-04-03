@@ -14,7 +14,7 @@ public class DbScoreService {
 	
 	public DbScoreService() {
 		try {
-			con = DriverManager.getConnection("jdbc:sqlite:src/data/score.db");
+			con = DriverManager.getConnection("jdbc:sqlite:data/score.db");
 		} catch (SQLException e) {
 			e.printStackTrace(); //No deberia poder llegar a aca
 		}
