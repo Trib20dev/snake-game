@@ -192,7 +192,6 @@ public class GameView {
 	/** Oculta la ventana del juego */
 	public void hide() {
 		frame.setVisible(false);
-		gController.onHide();
 	}
 
 	/** Libera los recursos de la ventana */
@@ -200,7 +199,4 @@ public class GameView {
         frame.dispose();
     }
     
-    public boolean isVisible() {
-    	return frame.isVisible();
-    }
 }

@@ -154,14 +154,6 @@ public class OnDeadView {
 	 */
 	public void hide() {
 		frame.setVisible(false);
-		gController.onHide();
 	}
-	
-	public boolean isVisible() {
-		return frame.isVisible();
-	}
-	public void dispose() {
-		frame.dispose();
-	}
-	
+		
 }

@@ -11,7 +11,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
-import controllers.GameController;
 import models.Player;
 /**
  * Vista de ranking del juego Snake.
@@ -29,12 +28,6 @@ public class RankingView {
 	private JLabel fourth;
 	private JLabel fifth;
 	private JLabel[] ranks;
-	
-	private GameController gController;
-	
-	public void serController(GameController con) {
-		gController = con;
-	}
 	
 	/**
      * Constructor que inicializa los componentes gráficos de la ventana de ranking.
@@ -115,7 +108,6 @@ public class RankingView {
 	/** Oculta la ventana del ranking. */
 	public void hide() {
 		frame.setVisible(false);
-		gController.onHide();
 	}
 	
 	/**
@@ -138,7 +130,4 @@ public class RankingView {
 		return frame.isVisible();
 	}
 	
-	public void dispose() {
-		frame.dispose();
-	}
 }
