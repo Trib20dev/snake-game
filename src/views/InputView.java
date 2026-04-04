@@ -187,4 +187,5 @@ public class InputView {
 		frame.setResizable(false);
 		frame.setLocationRelativeTo(null);
 	}
+	
 }

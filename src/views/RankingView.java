@@ -28,6 +28,7 @@ public class RankingView {
 	private JLabel fourth;
 	private JLabel fifth;
 	private JLabel[] ranks;
+	
 	/**
      * Constructor que inicializa los componentes gráficos de la ventana de ranking.
      */

@@ -155,5 +155,5 @@ public class OnDeadView {
 	public void hide() {
 		frame.setVisible(false);
 	}
-
+		
 }
