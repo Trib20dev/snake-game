@@ -29,7 +29,7 @@ import models.Snake;
 public class GameView extends JPanel{
 	private GameController gController;
 	private JFrame frame;
-	private JPanel mainPanel;
+//	private JPanel mainPanel;
 	private Container cCuadricula;
 	private JLabel[][] lCuadricula;
 	private Container cPuntuacion;
@@ -41,7 +41,7 @@ public class GameView extends JPanel{
      */
 	public GameView() {
 		frame = new JFrame();
-		mainPanel = new JPanel();
+//		mainPanel = new JPanel();
 		cCuadricula = new Container();
 		cCuadricula = new Container();
 		lCuadricula = new JLabel[20][20];
@@ -75,10 +75,10 @@ public class GameView extends JPanel{
      * Configura el panel principal que contiene puntuaciones y cuadrícula.
      */
 	private void configureMainPanel() {
-		mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
-		mainPanel.add(cPuntuacion);
-		mainPanel.add(cMaxPuntuacion);
-		mainPanel.add(cCuadricula);
+		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+		add(cPuntuacion);
+		add(cMaxPuntuacion);
+		add(cCuadricula);
 	}
 	
 	/**
@@ -86,7 +86,7 @@ public class GameView extends JPanel{
      */
 	private void configurarFrame() {
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		frame.add(mainPanel);
+		frame.add(this);
 		frame.pack();
 		frame.setResizable(false);
 		frame.addKeyListener(new KeyAdapter() {

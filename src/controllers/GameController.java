@@ -46,6 +46,10 @@ public class GameController {
 	private Difficulty difficulty;
 	private int speed;
 	
+	/*TODO adaptar el player, para que este tenga un score, y modificarlo para
+	* que con un metodo save que emplee el DbScoreService se guarde solo, aunq 
+	* he de revisar como maneja ese servicio...
+	*/
 	private String name;
 
 	/**
