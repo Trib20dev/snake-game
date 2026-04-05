@@ -18,7 +18,8 @@ import models.Player;
  * Muestra los 5 primeros jugadores con sus puntuaciones en un panel ordenado.
  * Cada posición se representa con un JLabel.
  */
-public class RankingView {
+@SuppressWarnings("serial")
+public class RankingView extends JPanel{
 	private JFrame frame;
 	private JPanel mainPanel;
 	private JLabel title;

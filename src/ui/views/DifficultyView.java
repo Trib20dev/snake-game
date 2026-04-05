@@ -16,7 +16,8 @@ import javax.swing.SwingConstants;
 import controllers.GameController;
 import models.Difficulty;
 
-public class DifficultyView {
+@SuppressWarnings("serial")
+public class DifficultyView extends JPanel{
 	private JFrame frame;
 	private JPanel mainPanel;
 	private JLabel title;

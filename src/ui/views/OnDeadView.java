@@ -23,7 +23,8 @@ import controllers.GameController;
  * están conectados a un {@link GameController} para manejar
  * las acciones del usuario.
  */
-public class OnDeadView {
+@SuppressWarnings("serial")
+public class OnDeadView extends JPanel{
 
 	private GameController gController;
 	private JFrame frame;

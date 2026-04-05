@@ -33,7 +33,8 @@ import controllers.GameController;
  * La vista maneja internamente la configuración de sus componentes
  * y no necesita que el controlador se preocupe por el diseño gráfico.
  */
-public class InputView {
+@SuppressWarnings("serial")
+public class InputView extends JPanel{
 	private GameController gController;
 
 	private JFrame frame;

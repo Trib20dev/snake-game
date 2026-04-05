@@ -25,7 +25,8 @@ import models.Snake;
  * Se encarga de mostrar la cuadrícula del juego, la puntuación actual y la puntuación máxima.
  * Cada celda de la cuadrícula se representa con un JLabel, y se actualiza en cada tick del juego.
  */
-public class GameView {
+@SuppressWarnings("serial")
+public class GameView extends JPanel{
 	private GameController gController;
 	private JFrame frame;
 	private JPanel mainPanel;
