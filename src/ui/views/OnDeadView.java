@@ -1,4 +1,4 @@
-package views;
+package ui.views;
 
 import java.awt.Color;
 import java.awt.Container;
