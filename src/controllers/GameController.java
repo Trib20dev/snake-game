@@ -11,11 +11,11 @@ import models.Direccion;
 import models.Game;
 import models.Player;
 import services.DbScoreService;
-import views.DifficultyView;
-import views.GameView;
-import views.InputView;
-import views.OnDeadView;
-import views.RankingView;
+import ui.views.DifficultyView;
+import ui.views.GameView;
+import ui.views.InputView;
+import ui.views.OnDeadView;
+import ui.views.RankingView;
 /**
  * Controlador principal del juego.
  * <p>
