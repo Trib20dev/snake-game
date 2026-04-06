@@ -101,12 +101,12 @@ public class OnDeadView extends JPanel{
 		rankIcon.setText("🏆");
 		rankIcon.setForeground(Color.orange);
 		rankIcon.setFont(new Font("Segoe UI Emoji", Font.PLAIN, 34));
-		rankIcon.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				gController.onRankIconPressed();
-			}
-		});
+//		rankIcon.addMouseListener(new MouseAdapter() {
+//			@Override
+//			public void mouseClicked(MouseEvent e) {
+//				gController.onRankIconPressed();
+//			}
+//		});
 		cTitle.add(title);
 		cTitle.add(rankIcon);
 	}

@@ -76,6 +76,13 @@ public class GameView extends JPanel{
      */
 	private void configureMainPanel() {
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+		setFocusable(true); // TODO investigar bien las implicaciones de esto despues
+		addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				gController.onGamePressed(e);
+			}
+		});
 		add(cPuntuacion);
 		add(cMaxPuntuacion);
 		add(cCuadricula);

@@ -11,6 +11,7 @@ import models.Direccion;
 import models.Game;
 import models.Player;
 import services.DbScoreService;
+import ui.frame.MainFrame;
 import ui.views.DifficultyView;
 import ui.views.GameView;
 import ui.views.InputView;
@@ -35,11 +36,14 @@ import ui.views.RankingView;
  * de la lógica de presentación y control del juego.
  */
 public class GameController {
-	private GameView gView;
-	private InputView iView;
-	private OnDeadView dView;
-	private RankingView rView;
-	private DifficultyView diView;
+//	private GameView gView;
+//	private InputView iView;
+//	private OnDeadView dView;
+//	private RankingView rView;
+//	private DifficultyView diView;
+	private MainFrame mFrame;
+	
+	
 	private DbScoreService dService;
 	private Game game;
 	private ConfigurableSettings cSettings;
@@ -67,18 +71,9 @@ public class GameController {
 	 * Cada vista recibe una referencia al controlador para poder comunicarse con el.
 	 */
 	public GameController(/* int f, int c */) { // Va a no ser adaptable el tamaño de ña cuadrícula :D
-		gView = new GameView();
-		dView = new OnDeadView();
-		iView = new InputView();
-		rView = new RankingView();
-		diView = new DifficultyView();
+		mFrame = new MainFrame();
+		mFrame.setControllers(this);
 		cSettings = new ConfigurableSettings();
-
-		gView.setController(this);
-		dView.setgController(this);
-		iView.setController(this);
-		diView.setController(this);
-
 		dService = new DbScoreService();
 	}
 
@@ -89,7 +84,8 @@ public class GameController {
 	 * permitir que el jugador ingrese su nombre antes de iniciar la partida
 	 */
 	public void start() {
-		iView.show();
+		mFrame.switchToIView();
+		mFrame.setVisible(true);
 	}
 
 	/**
@@ -143,7 +139,7 @@ public class GameController {
 			game.getSnake().crece(false);
 		game.getSnake().actualizarDireccion();
 
-	 	gView.render(game);
+	 	mFrame.renderGame(game);
 	}
 
 	/**
@@ -178,24 +174,23 @@ public class GameController {
 	 */
 	public void onGamesEnd() {
 		int p = game.getScore().mPoints;
-		gView.hide();
 		dService.saveOrUpdate(new Player(name, p), difficulty);
-		rView.render(dService.getTop5Ranked(difficulty));
-		dView.show();
+		mFrame.renderRanking(dService.getTop5Ranked(difficulty));
+		mFrame.switchToTemporal();
 	}
 
-	/**
-	 * Alterna la visibilidad de la vista del ranking
-	 * <p>
-	 * Si la vista esta visible, la oculta; en caso contraio, la muestra
-	 */
-	public void onRankIconPressed() {
-		if (rView.isVisible())
-			rView.hide();
-		else
-			rView.show();
-
-	}
+//	/**
+//	 * Alterna la visibilidad de la vista del ranking
+//	 * <p>
+//	 * Si la vista esta visible, la oculta; en caso contraio, la muestra
+//	 */
+//	public void onRankIconPressed() {
+//		if (rView.isVisible())
+//			rView.hide();
+//		else
+//			rView.show();
+//
+//	}
 
 	/**
 	 * Maneja el evento de cambio de nombre en la vista de replay
@@ -208,9 +203,7 @@ public class GameController {
 	 * </ul>
 	 */
 	public void onBNamePressed() {
-		dView.hide();
-		rView.hide();
-		iView.show();
+		mFrame.switchToIView();
 	}
 	/**
 	 * Maneja el evento de "Volver a jugar" en la vista de replay
@@ -226,10 +219,8 @@ public class GameController {
 	 */
 	public void onBReplayPressed() {
 		game.restart();
-		dView.hide();
-		rView.hide();
-		gView.render(game);
-		gView.show();
+		mFrame.renderGame(game);
+		mFrame.switchToGView();
 		startGameLoop();
 	}
 	/**
@@ -246,18 +237,16 @@ public class GameController {
 	 * @param e evento de teclado que contiene la tecla pulsada
 	 */
 	public void onNameKeyPressed(KeyEvent e) {
-		if (iView.getText().length() >= 10) //Tiene un error un poco raro cuando pasas de 10
-            iView.setText(iView.getText().substring(0,10));
+		if (mFrame.getIView().getText().length() >= 10) //Tiene un error un poco raro cuando pasas de 10
+			mFrame.getIView().setText(mFrame.getIView().getText().substring(0,10));
         
 		if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-			if (iView.getText().replace(" ", "").toLowerCase().matches("[a-z]*") && iView.getText().length() > 1) {
-				name = iView.getText().replace(" ", "").toLowerCase();
-				iView.hide();
-				iView.clear();
-				diView.show();
+			if (mFrame.getIView().getText().replace(" ", "").toLowerCase().matches("[a-z]*") && mFrame.getIView().getText().length() > 1) {
+				name = mFrame.getIView().getText().replace(" ", "").toLowerCase();
+				mFrame.switchToDiView();
 			} else {
-				iView.warning(true);
-				Timer t = new Timer(2000, j -> iView.warning(false));
+				mFrame.getIView().warning(true);
+				Timer t = new Timer(2000, j -> mFrame.getIView().warning(false));
 				t.setRepeats(false);
 				t.start();
 			}
@@ -272,10 +261,9 @@ public class GameController {
 		case HARD -> cSettings.getHardSpeed();
 		default -> -1;
 		};
-		diView.hide();
 		game = new Game(20, 20, dService.getPoints(name,dif));
-		gView.render(game);
-		gView.show();
+		mFrame.renderGame(game);
+		mFrame.switchToGView();
 		startGameLoop(); 
 	}
 	
