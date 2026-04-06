@@ -91,6 +91,7 @@ public class MainFrame extends JFrame { // TODO igual lo cambio el cardLayout a 
 	}
 	
 	public void switchToIView() {
+		iView.clear();
 		cardLayout.show(getContentPane(), "iView");
 	}
 	
