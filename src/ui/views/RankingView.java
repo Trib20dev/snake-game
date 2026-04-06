@@ -20,8 +20,8 @@ import models.Player;
  */
 @SuppressWarnings("serial")
 public class RankingView extends JPanel{
-	private JFrame frame;
-	private JPanel mainPanel;
+//	private JFrame frame;
+//	private JPanel mainPanel;
 	private JLabel title;
 	private JLabel first;
 	private JLabel second;
@@ -34,8 +34,8 @@ public class RankingView extends JPanel{
      * Constructor que inicializa los componentes gráficos de la ventana de ranking.
      */
 	public RankingView() {
-		frame = new JFrame();
-		mainPanel = new JPanel();
+//		frame = new JFrame();
+//		mainPanel = new JPanel();
 		title = new JLabel();
 		ranks = new JLabel[5];
 		first = new JLabel();
@@ -57,26 +57,26 @@ public class RankingView extends JPanel{
 		configureTitle();
 		configureRanks();
 		configureMainPanel();
-		configureFrame();
+//		configureFrame();
 	}
-	/**
-     * Configura el JFrame principal de la ventana de ranking.
-     */
-	private void configureFrame() {
-		frame.add(mainPanel);
-		frame.pack();
-		frame.setResizable(false);
-		frame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
-	}
+//	/**
+//     * Configura el JFrame principal de la ventana de ranking.
+//     */
+//	private void configureFrame() {
+//		frame.add(mainPanel);
+//		frame.pack();
+//		frame.setResizable(false);
+//		frame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+//	}
 	/**
      * Configura el panel principal, añadiendo el título y las posiciones del ranking.
      */
 	private void configureMainPanel() {
-		mainPanel.setLayout(new GridLayout(6,1,10,5));
-		mainPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-		mainPanel.add(title);
+		setLayout(new GridLayout(6,1,10,5));
+		setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+		add(title);
 		for (var label : ranks)
-			mainPanel.add(label);
+			add(label);
 	}
 	/**
      * Configura el título de la ventana de ranking.
@@ -101,15 +101,15 @@ public class RankingView extends JPanel{
 
 	 // --- Métodos de control de visibilidad ---
 
-	/** Muestra la ventana del ranking. */
-	public void show() {
-		frame.setVisible(true);
-	}
-	
-	/** Oculta la ventana del ranking. */
-	public void hide() {
-		frame.setVisible(false);
-	}
+//	/** Muestra la ventana del ranking. */
+//	public void show() {
+//		frame.setVisible(true);
+//	}
+//	
+//	/** Oculta la ventana del ranking. */
+//	public void hide() {
+//		frame.setVisible(false);
+//	}
 	
 	/**
      * Renderiza el ranking con los jugadores proporcionados.
@@ -126,9 +126,9 @@ public class RankingView extends JPanel{
 
 	}
 	
-	/** Indica si la ventana de ranking está visible. */
-	public boolean isVisible() {
-		return frame.isVisible();
-	}
+//	/** Indica si la ventana de ranking está visible. */
+//	public boolean isVisible() {
+//		return frame.isVisible();
+//	}
 	
 }

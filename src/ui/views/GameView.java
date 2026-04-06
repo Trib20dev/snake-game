@@ -28,7 +28,7 @@ import models.Snake;
 @SuppressWarnings("serial")
 public class GameView extends JPanel{
 	private GameController gController;
-	private JFrame frame;
+//	private JFrame frame;
 //	private JPanel mainPanel;
 	private Container cCuadricula;
 	private JLabel[][] lCuadricula;
@@ -40,7 +40,7 @@ public class GameView extends JPanel{
      * Constructor que inicializa los componentes gráficos de la ventana del juego.
      */
 	public GameView() {
-		frame = new JFrame();
+//		frame = new JFrame();
 //		mainPanel = new JPanel();
 		cCuadricula = new Container();
 		cCuadricula = new Container();
@@ -69,7 +69,7 @@ public class GameView extends JPanel{
 		configurarContenedorPuntuacion();
 		configureCMaxPoints();
 		configureMainPanel();
-		configurarFrame();
+//		configurarFrame();
 	}
 	/**
      * Configura el panel principal que contiene puntuaciones y cuadrícula.
@@ -81,21 +81,21 @@ public class GameView extends JPanel{
 		add(cCuadricula);
 	}
 	
-	/**
-     * Configura el JFrame principal de la ventana del juego, incluyendo el KeyListener para controlar la serpiente.
-     */
-	private void configurarFrame() {
-		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		frame.add(this);
-		frame.pack();
-		frame.setResizable(false);
-		frame.addKeyListener(new KeyAdapter() {
-			@Override
-			public void keyPressed(KeyEvent e) {
-				gController.onGamePressed(e);
-			}
-		});
-	}
+//	/**
+//     * Configura el JFrame principal de la ventana del juego, incluyendo el KeyListener para controlar la serpiente.
+//     */
+//	private void configurarFrame() {
+//		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+//		frame.add(this);
+//		frame.pack();
+//		frame.setResizable(false);
+//		frame.addKeyListener(new KeyAdapter() {
+//			@Override
+//			public void keyPressed(KeyEvent e) {
+//				gController.onGamePressed(e);
+//			}
+//		});
+//	}
 
 	/**
      * Configura el contenedor que muestra la puntuación actual del jugador.
@@ -185,19 +185,19 @@ public class GameView extends JPanel{
 
 	  // --- Métodos de control de visibilidad ---
 	
-	/** Muestra la ventana del juego */
-	public void show() {
-		frame.setVisible(true);
-	}
-	
-	/** Oculta la ventana del juego */
-	public void hide() {
-		frame.setVisible(false);
-	}
-
-	/** Libera los recursos de la ventana */
-    public void dispose() {
-        frame.dispose();
-    }
+//	/** Muestra la ventana del juego */
+//	public void show() {
+//		frame.setVisible(true);
+//	}
+//	
+//	/** Oculta la ventana del juego */
+//	public void hide() {
+//		frame.setVisible(false);
+//	}
+//
+//	/** Libera los recursos de la ventana */
+//    public void dispose() {
+//        frame.dispose();
+//    }
     
 }

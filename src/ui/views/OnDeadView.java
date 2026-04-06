@@ -27,8 +27,8 @@ import controllers.GameController;
 public class OnDeadView extends JPanel{
 
 	private GameController gController;
-	private JFrame frame;
-	private JPanel mainPanel; // Me informo chati de q me hace falta este para poder trabajar con BoxLayout
+//	private JFrame frame;
+//	private JPanel mainPanel; // Me informo chati de q me hace falta este para poder trabajar con BoxLayout
 	private Container cTitle;
 	private JLabel title;
 	private JLabel rankIcon;
@@ -40,8 +40,8 @@ public class OnDeadView extends JPanel{
 	 * de la vista.
 	 */
 	public OnDeadView() {
-		frame = new JFrame();
-		mainPanel = new JPanel();
+//		frame = new JFrame();
+//		mainPanel = new JPanel();
 		cTitle = new Container();
 		title = new JLabel();
 		rankIcon = new JLabel();
@@ -66,27 +66,27 @@ public class OnDeadView extends JPanel{
 		configureCTitle();
 		configureCButtons();
 		configurarMainPanel();
-		configureFrame();
+//		configureFrame();
 	}
 	/**
 	 * Configura el panel principal con layout vertical y añade
 	 * el título y los botones.
 	 */
 	private void configurarMainPanel() {
-		mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
-		mainPanel.add(cTitle);
-		mainPanel.add(cButtons);
+		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+		add(cTitle);
+		add(cButtons);
 	}
-	/**
-	 * Configura el JFrame principal, añadiendo el panel principal,
-	 * ajustando tamaño y comportamiento de cierre.
-	 */
-	private void configureFrame() {
-		frame.add(mainPanel);
-		frame.pack();
-		frame.setResizable(false);
-		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-	}
+//	/**
+//	 * Configura el JFrame principal, añadiendo el panel principal,
+//	 * ajustando tamaño y comportamiento de cierre.
+//	 */
+//	private void configureFrame() {
+//		frame.add(mainPanel);
+//		frame.pack();
+//		frame.setResizable(false);
+//		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+//	}
 	/**
 	 * Configura el contenedor del título, incluyendo el JLabel
 	 * principal y el icono de ranking con su listener.
@@ -144,17 +144,17 @@ public class OnDeadView extends JPanel{
 		cButtons.add(bName);
 		cButtons.add(bReplay);
 	}
-	/**
-	 * Muestra la ventana en pantalla.
-	 */
-	public void show() {
-		frame.setVisible(true);
-	}
-	/**
-	 * Oculta la ventana de la pantalla.
-	 */
-	public void hide() {
-		frame.setVisible(false);
-	}
+//	/**
+//	 * Muestra la ventana en pantalla.
+//	 */
+//	public void show() {
+//		frame.setVisible(true);
+//	}
+//	/**
+//	 * Oculta la ventana de la pantalla.
+//	 */
+//	public void hide() {
+//		frame.setVisible(false);
+//	}
 		
 }

@@ -18,8 +18,8 @@ import models.Difficulty;
 
 @SuppressWarnings("serial")
 public class DifficultyView extends JPanel{
-	private JFrame frame;
-	private JPanel mainPanel;
+//	private JFrame frame;
+//	private JPanel mainPanel;
 	private JLabel title;
 	private JPanel pButtons;
 	private JButton bEasy;
@@ -32,8 +32,8 @@ public class DifficultyView extends JPanel{
 	}
 	
 	public DifficultyView() {
-		frame = new JFrame();
-		mainPanel = new JPanel();
+//		frame = new JFrame();
+//		mainPanel = new JPanel();
 		title = new JLabel();
 		pButtons = new JPanel();
 		bEasy = new JButton();
@@ -49,7 +49,7 @@ public class DifficultyView extends JPanel{
 		configurePButtons();
 		configureTitle();
 		configureMainPanel();
-		configureFrame();
+//		configureFrame();
 	}
 
 	private void configureBEasy() {
@@ -90,26 +90,26 @@ public class DifficultyView extends JPanel{
 	}
 	
 	private void configureMainPanel() {
-		mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
-		mainPanel.add(title);
-		mainPanel.add(pButtons);
+		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+		add(title);
+		add(pButtons);
 	}
 	
-	private void configureFrame() {
-		frame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
-		frame.add(mainPanel);
-		frame.pack();
-		frame.setLocationRelativeTo(null);
-		frame.setResizable(false);
-	}
-	
-	public void show() {
-		frame.setVisible(true);
-	}
-	
-	public void hide() {
-		frame.setVisible(false);
-	}
+//	private void configureFrame() {
+//		frame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+//		frame.add(mainPanel);
+//		frame.pack();
+//		frame.setLocationRelativeTo(null);
+//		frame.setResizable(false);
+//	}
+//	
+//	public void show() {
+//		frame.setVisible(true);
+//	}
+//	
+//	public void hide() {
+//		frame.setVisible(false);
+//	}
 	
 }
 
