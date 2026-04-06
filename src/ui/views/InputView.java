@@ -37,8 +37,8 @@ import controllers.GameController;
 public class InputView extends JPanel{
 	private GameController gController;
 
-	private JFrame frame;
-	private JPanel mainPanel;
+//	private JFrame frame;
+//	private JPanel mainPanel;
 	private Container cTitle;
 	private JLabel title;
 	private Container cTextArea;
@@ -50,8 +50,8 @@ public class InputView extends JPanel{
      * y los configura correctamente.
      */
 	public InputView() {
-		frame = new JFrame();
-		mainPanel = new JPanel();
+//		frame = new JFrame();
+//		mainPanel = new JPanel();
 		cTitle = new Container();
 		title = new JLabel();
 		cTextArea = new Container();
@@ -96,18 +96,18 @@ public class InputView extends JPanel{
 	public void warning(boolean b) {
 		warning.setText((b) ? "NOMBRE INVALIDO" : "");
 	}
-	/**
-     * Muestra la ventana de entrada.
-     */
-	public void show() {
-		frame.setVisible(true);
-	}
-	/**
-     * Oculta la ventana de entrada.
-     */
-	public void hide() {
-		frame.setVisible(false);
-	}
+//	/**
+//     * Muestra la ventana de entrada.
+//     */
+//	public void show() {
+//		frame.setVisible(true);
+//	}
+//	/**
+//     * Oculta la ventana de entrada.
+//     */
+//	public void hide() {
+//		frame.setVisible(false);
+//	}
 	/**
      * Limpia el contenido del área de entrada dejando un espacio en blanco.
      */
@@ -125,7 +125,7 @@ public class InputView extends JPanel{
 		configureCTextArea();
 		configureWarningMessage();
 		configureMainPanel();
-		configureFrame();
+//		configureFrame();
 	}
 	/** 
      * Configura el contenedor que muestra el título de la ventana.
@@ -173,20 +173,20 @@ public class InputView extends JPanel{
      * Configura el panel principal que agrupa todos los contenedores.
      */
 	private void configureMainPanel() {
-		mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
-		mainPanel.add(cTitle);
-		mainPanel.add(cTextArea);
-		mainPanel.add(cWarning);
+		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+		add(cTitle);
+		add(cTextArea);
+		add(cWarning);
 	}
-	/**
-     * Configura el JFrame principal y añade un KeyListener para capturar la entrada del usuario.
-     */
-	private void configureFrame() {
-		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		frame.add(mainPanel);
-		frame.pack();
-		frame.setResizable(false);
-		frame.setLocationRelativeTo(null);
-	}
+//	/**
+//     * Configura el JFrame principal y añade un KeyListener para capturar la entrada del usuario.
+//     */
+//	private void configureFrame() {
+//		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+//		frame.add(mainPanel);
+//		frame.pack();
+//		frame.setResizable(false);
+//		frame.setLocationRelativeTo(null);
+//	}
 	
 }
