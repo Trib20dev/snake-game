@@ -52,7 +52,7 @@ public class DbScoreService {
 				ResultSet rs = getPointsStmt.executeQuery();
 				rs.next();
 				int p = rs.getInt("points");
-				updateStmt.setInt(1, p);
+				updateStmt.setInt(1, player.puntuacion);
 				updateStmt.setString(2, player.nombre);
 				updateStmt.setString(3, dif.toString());
 				if(player.puntuacion > p) {
